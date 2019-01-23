@@ -5,11 +5,13 @@ import { Logger, MkFormService, MkForm }								from 'mk';
 import { Producto, ProductoInterface }				    				from '../../models/producto.model';			
 
 import { environment }													from '../../../environments/environment';
-import { MatDialog } 													from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } 													from '@angular/material';
 
-import { UserService } from '../../services/user.service';
+import { UserService } 													from '../../services/user.service';
 
-import { AuthService } from '../../../shared/services/auth.service';
+import { AuthService } 													from '../../../shared/services/auth.service';
+
+import { CourseClosedDialog }											from '../dialogs/course-closed/course-closed-dialog.component';
 
 @Component({
 	selector: 'course-card',
@@ -55,7 +57,9 @@ export class CourseCardComponent
 		private window: Window,
 		private _fs: MkFormService,
 		private _us: UserService,
-		private _as: AuthService ) 
+		private _as: AuthService,
+		private _dialog: MatDialog,
+		private _vcr: ViewContainerRef ) 
 	{ 
 		logger.log('COURSE CARD COMPONENT'); 
 		this._suite = environment.suiteUrl;
@@ -91,14 +95,30 @@ export class CourseCardComponent
 		this.show = !this.show;
 	}
 
-	private go () : void 
-	{
-		if (this._state === 'untouched')
-		{
+	private go () : void {
+		if (this._state === 'untouched') {
 			this.iniciar.emit(this._currentCourse);
-		} else {
+		} else if (this._state === 'pending') {
+			this.openDialog('CEDIDO');
+		} else if (this._state === 'active') {
 			let tkn: any = this._as.getToken();
 			window.open(environment.ssoRedirectUrl + this._code + '&access_token=' + tkn);
-		}
+		} else if (this._state === 'expired') {
+			this.openDialog('CADUCADO')
+		} else if (this._state === 'terminated') {
+			this.openDialog('TERMINADO')
+		} 
+	}
+
+	private openDialog (estadoCurso) {
+		let dialogRef = this._dialog.open(CourseClosedDialog, {
+			id: 'course-closed-dialog',
+			panelClass: 'custom-dialog',
+			viewContainerRef: this._vcr,
+			disableClose: true,
+			data: {
+				estado: estadoCurso
+			}
+		});
 	}
 }

@@ -10,74 +10,74 @@
   overflow: hidden;
 
   .cert-card__photo {
-	.cert-card__photo__img {
-	  height: 20vh;
-	  @media all and (min-width: 54em) {
-	  	height: 17vh;
-	  }
-	}
+		.cert-card__photo__img {
+		  height: 20vh;
+		  @media all and (min-width: 54em) {
+		  	height: 17vh;
+		  }
+		}
   }
 
   .cert-card__title {
-	display: flex;
-	align-items: center;
-	margin: 2vh 0px;
-	padding: 0vmin 1vmin;
+		display: flex;
+		align-items: center;
+		margin: 2vh 0px;
+		padding: 0vmin 1vmin;
     min-height: 8vmax;
-	text-align: center;
-	h2 {
-	  font-size: calc(1vw + 1vh + .5vmin);
-	  @media all and (min-width: 32em) {
-	    font-size: calc(.7vw + .7vh + .3vmin);;
-	  }
-	  @media all and (min-width: 54em) {
-	  	font-size: calc(.6vw + .4vh + .3vmin);
-	  }
-	  @media all and (min-width: 84em) {
-	  	font-size: calc(.5vw + .4vh + .3vmin);
-	  }
-	}
+		text-align: center;
+		h2 {
+		  font-size: calc(1vw + 1vh + .5vmin);
+		  @media all and (min-width: 32em) {
+		    font-size: calc(.7vw + .7vh + .3vmin);;
+		  }
+		  @media all and (min-width: 54em) {
+		  	font-size: calc(.6vw + .4vh + .3vmin);
+		  }
+		  @media all and (min-width: 84em) {
+		  	font-size: calc(.5vw + .4vh + .3vmin);
+		  }
+		}
   }
 
   .cert-card__button {
-	padding: 2vh;
-	margin: 4vh 0px;
-	border-radius: 35px;
-	width: 90%;
-	background-color: $color-certificaciones;
-	color: white;
-	border-color: transparent;
-	text-align: center;
-	cursor: pointer;
-	p {
-	  margin: 0px;
-	  font-size: calc(.8vw + .8vh + .4vmin);
-	}
-	@media all and (min-width: 48em) {
-	  padding: 2vh;
-	  p {
-	  	font-size: calc(.7vw + .7vh + .3vmin);
-	  }
-	}
-	@media all and (min-width: 54em) {
-	  p {
-		font-size: calc(.6vw + .6vh + .2vmin);
-	  }
-	}
-	@media all and (min-width: 70em) {
-	  p {
-		font-size: calc(.4vw + .4vh + .3vmin);
-	  }
-	}
-	@media all and (min-width: 84em) {
-	  p {
-		font-size: calc(.3vw + .3vh + .3vmin);
-	  }
-	}
-	// @media all and (min-width: 62em) {
-	//   p {
-	//   	font-size: calc(.4vw + .4vh + .2vmin);
-	//   }
-	// }
+		padding: 2vh;
+		margin: 4vh 0px;
+		border-radius: 35px;
+		width: 90%;
+		background-color: $color-certificaciones;
+		color: white;
+		border-color: transparent;
+		text-align: center;
+		cursor: pointer;
+		p {
+		  margin: 0px;
+		  font-size: calc(.8vw + .8vh + .4vmin);
+		}
+		&:focus {
+			outline: 0;
+			border-color: $color-certificaciones;
+			box-shadow: 0 0 0 0.3rem rgba(40, 120, 230, 0.5);
+		}
+		@media all and (min-width: 48em) {
+		  padding: 2vh;
+		  p {
+		  	font-size: calc(.7vw + .7vh + .3vmin);
+		  }
+		}
+		@media all and (min-width: 54em) {
+		  p {
+				font-size: calc(.6vw + .6vh + .2vmin);
+		  }
+		}
+		@media all and (min-width: 70em) {
+		  p {
+				font-size: calc(.4vw + .4vh + .3vmin);
+		  }
+		}
+		@media all and (min-width: 84em) {
+		  p {
+				font-size: calc(.3vw + .3vh + .3vmin);
+		  }
+		}
   }
 }

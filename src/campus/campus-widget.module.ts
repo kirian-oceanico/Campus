@@ -34,6 +34,8 @@ import { CourseActivacionComponent }							from './components/course-activacion/
 // --- Dialogs --------------------------------------------------------------------------
 import { UserJobsDialogComponent } from './components/dialogs/user-jobs/user-jobs-dialog.component';
 import { FormErrorDialog } from './components/dialogs/form-error/form-error-dialog.component';
+import { CourseClosedDialog } from './components/dialogs/course-closed/course-closed-dialog.component';
+
 import { LogOutComponent } from './components/log-out/log-out.component';
 
 /**
@@ -54,7 +56,11 @@ import { LogOutComponent } from './components/log-out/log-out.component';
 
 		PopoverModule
 	],
-	entryComponents:[ UserJobsDialogComponent, CropperComponent, FormErrorDialog ],
+	entryComponents:[ 
+		UserJobsDialogComponent, 
+		CropperComponent, 
+		FormErrorDialog,
+		CourseClosedDialog ],
 	declarations: 	[ 
 		CampusComponent, 
 		AcountComponent, 
@@ -65,6 +71,7 @@ import { LogOutComponent } from './components/log-out/log-out.component';
 		CertificateRequestComponent, 
 		UserJobsDialogComponent, 
 		FormErrorDialog,
+		CourseClosedDialog,
 		PasswordChangeComponent,
 		AvatarComponent, 
 		CropperComponent, 

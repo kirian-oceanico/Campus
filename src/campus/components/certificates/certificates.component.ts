@@ -82,8 +82,15 @@ export class CertificatesComponent
 
     private subscribeCourses () : Subscription
     {
-        return this._cs.courses.subscribe( certificates => {
-            this._certificates = certificates;
+        return this._cs.courses.subscribe( ( certificates : any ) => {
+            let availableCertificates = [];
+
+            for (let certificate of certificates) {
+                if ( certificate.license.status === 'terminated' ) {
+                    availableCertificates.push(certificate)
+                } 
+            }
+            this._certificates = availableCertificates;
         });
     }
 

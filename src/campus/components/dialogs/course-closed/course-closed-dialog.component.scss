@@ -1,0 +1,15 @@
+.wrapper {
+  i {
+    display: flex;
+    flex-direction: row-reverse;
+    cursor: pointer;
+  }
+
+  .course_info {
+    text-align: center;
+
+    .course_info__message {
+      padding: 15px 10px 0px;
+    }
+  }
+}
