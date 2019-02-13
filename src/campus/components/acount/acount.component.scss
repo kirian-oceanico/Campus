@@ -10,7 +10,13 @@
 	}
 	
 	.account {
-		padding: 5vh 7vw;
+		max-height: 140vh;
+		padding: 5vh 5vw;
+		@media all and (min-width: 48em) {
+			max-height: 100vh;
+			overflow: auto;
+			padding: 10vh 5vw;
+		}
 	}
 
   h1	{

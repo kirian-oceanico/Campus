@@ -21,7 +21,7 @@
   .cert-card__title {
 		display: flex;
 		align-items: center;
-		margin: 2vh 0px;
+		// margin: 2vh 0px;
 		padding: 0vmin 1vmin;
     min-height: 8vmax;
 		text-align: center;
@@ -41,7 +41,7 @@
 
   .cert-card__button {
 		padding: 2vh;
-		margin: 4vh 0px;
+		margin: 1vh 0 3vh;
 		border-radius: 35px;
 		width: 90%;
 		background-color: $color-certificaciones;
@@ -59,8 +59,7 @@
 			box-shadow: 0 0 0 0.3rem rgba(40, 120, 230, 0.5);
 		}
 		@media all and (min-width: 48em) {
-		  padding: 2vh;
-		  p {
+			p {
 		  	font-size: calc(.7vw + .7vh + .3vmin);
 		  }
 		}
@@ -71,12 +70,7 @@
 		}
 		@media all and (min-width: 70em) {
 		  p {
-				font-size: calc(.4vw + .4vh + .3vmin);
-		  }
-		}
-		@media all and (min-width: 84em) {
-		  p {
-				font-size: calc(.3vw + .3vh + .3vmin);
+				font-size: calc(.4vw + .4vh + .2vmin);
 		  }
 		}
   }

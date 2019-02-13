@@ -79,6 +79,7 @@ export class CourseCardComponent
 			this._buttonMessage = 'ACTIVAR';
 		} else if (this._state === 'pending') {
 			this._buttonMessage = 'CEDIDO';
+			this._inactive = true;
 		} else if (this._state === 'active') {
 			this._buttonMessage = 'INGRESAR';
 		} else if (this._state === 'expired') {
@@ -104,9 +105,9 @@ export class CourseCardComponent
 			let tkn: any = this._as.getToken();
 			window.open(environment.ssoRedirectUrl + this._code + '&access_token=' + tkn);
 		} else if (this._state === 'expired') {
-			this.openDialog('CADUCADO')
+			this.openDialog('EXPIRADO')
 		} else if (this._state === 'terminated') {
-			this.openDialog('TERMINADO')
+			this.openDialog('FINALIZADO')
 		} 
 	}
 
