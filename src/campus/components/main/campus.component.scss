@@ -32,32 +32,37 @@
   	.container-left	{
   	  background-color: $color-certificaciones;
   	}
-  }  
+	}
+	.terminos-y-condiciones {
+		.container-left {
+			background-color: $color-certificaciones;
+		}
+	}	
   .container-left-heading {
   	display: inline;
   	margin: 0px;  
   	.navigation__menu {
-	  display: flex;
-	  flex-direction: row-reverse;
+	  	display: flex;
+	  	flex-direction: row-reverse;
   	  justify-content: space-between;
-	  margin: 20px 0px 30px;
-	  .logo {
-		margin-left: 30vw;
-		height: 6.8rem;
+	  	margin: 20px 0px 30px;
+	  	.logo {
+				margin-left: 30vw;
+				height: 6.8rem;
 	
-		@media all and (min-width: 32em) {
-		  margin-left: 38vw;
-		}
-	  }
+				@media all and (min-width: 32em) {
+		  		margin-left: 38vw;
+				}
+	  	}
 
   	  @media all and (min-width: 48em) {
-		flex-direction: row;
-		width: 92%;
-		margin-top: 2vh;
-		.avatar {
-  	  	  margin: 0px auto;
-  	  	}
-  	  }
+				flex-direction: row;
+				width: 92%;
+				margin: 0;
+				.avatar {
+  		    margin: 0px auto;
+  		  }
+  		}
   	}  
   	.navigation__sites {
   	  display: flex;
@@ -84,51 +89,78 @@
   	  padding-bottom: 1vmax;
   	}  
   	.heading_link_active:after {
-	  border-bottom: 0.3vh solid white;
-	  content: '';
-	  display: block;
-	  width: 50%;
-	  margin-left: auto;
-	  margin-right: auto;
-	  padding-top: 1vh;
-	  @media all and (min-width: 48em) {
-	    width: 25%; 
-	  }
+	  	border-bottom: 0.3vh solid white;
+	  	content: '';
+	  	display: block;
+	  	width: 50%;
+	  	margin-left: auto;
+	  	margin-right: auto;
+	  	padding-top: 1vh;
+	  	@media all and (min-width: 48em) {
+	  	  width: 25%; 
+	  	}
   	}
   }
 
   .container_right__cuenta {
-	margin-top: 70vh;
-	@media all and (min-height: 480px) {
-	  margin-top: 55vh;
-	}
-	@media all and (min-height: 600px) {
-	  margin-top: 45vh;
-	}
+		margin-top: 70vh;
+		@media all and (min-height: 480px) {
+		  margin-top: 55vh;
+		}
+		@media all and (min-height: 600px) {
+		  margin-top: 45vh;
+		}
   }
   .container_right__cursos {
-	margin-top: 34vh;
-	@media all and (min-height: 500px) {
-	  margin-top: 16vh;
-	}
-	@media all and (min-height: 600px) {
-	  margin-top: 11vh;
-	}
+		margin-top: 34vh;
+		@media all and (min-height: 500px) {
+		  margin-top: 16vh;
+		}
+		@media all and (min-height: 600px) {
+		  margin-top: 11vh;
+		}
   }
   .container_right__certificados {
-	margin-top: 22vh;
-	@media all and (min-height: 500px) {
-	  margin-top: 16vh;
+		margin-top: 22vh;
+		@media all and (min-height: 500px) {
+		  margin-top: 16vh;
+		}
+		@media all and (min-height: 600px) {
+		  margin-top: 11vh;
+		}
 	}
-	@media all and (min-height: 600px) {
-	  margin-top: 11vh;
+	
+	.container_right__terminos {
+		margin-top: 30vh;
 	}
-  }
+
+	.container_right__password {
+		margin-top: 10vh;
+	}
   
   @media all and (min-width: 48em) {
-	.container_right__cuenta, .container_right__cursos,
-	.container_right__certificados {
-	  margin-top: 0px;
-	}
+		.container_right__cuenta, .container_right__cursos,
+		.container_right__certificados, .container_right__terminos,
+		.container_right__password {
+		  margin-top: 0px;
+		}
   }
+}
+
+.watermark {
+	position: fixed;
+	bottom: 15px;
+	right: 5vw;
+	text-align: end;
+	color: #BBB;
+	p {
+		margin: 0;
+	}
+	.terms-link:hover {
+		text-decoration: underline;
+	}
+}
+
+.watermark_hidden {
+	display: none;
 }

@@ -47,6 +47,11 @@
             ACEPTAR
         </button>
     </div>
+
+    <div class="watermark">
+        <p>© 2019 • Grupo Oceano • Unidad Digital • Todos los derechos reservados.</p>
+        <p class="terms-link"><a routerLink="/{{_terms_and_conditions}}">Términos y Condiciones</a></p>
+    </div>
 </div>
 
 <cam-response *ngIf="_sent" [title]="_response_obj.title" [text]="_response_obj.text" 

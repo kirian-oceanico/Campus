@@ -8,6 +8,7 @@ import { CoursesComponent }										from './components/courses/courses.componen
 import { CertificatesComponent }								from './components/certificates/certificates.component';
 import { CertificateRequestComponent }							from './components/certificate-request/certificate-request.component';
 import { PasswordChangeComponent }								from './components/password-change/password-change.component';
+import { TermsAndConditionsComponent }							from './components/terms-and-conditions/terms-and-conditions.component';
 
 import { AuthGuard }											from '../shared/services/auth-guard.service';
 
@@ -29,7 +30,8 @@ export const campusRoutes: Routes =
 					{ path: environment.pathAcount, component: AcountComponent },
 					{ path: environment.pathCourses, component: CoursesComponent },
 					{ path: environment.pathCertificates, component: CertificatesComponent },
-					{ path: environment.pathPasswordChange, component: PasswordChangeComponent }
+					{ path: environment.pathPasswordChange, component: PasswordChangeComponent },
+					{ path: environment.pathTermsAndConditions, component: TermsAndConditionsComponent }
 				],
 				//component: CampusComponent
 			}

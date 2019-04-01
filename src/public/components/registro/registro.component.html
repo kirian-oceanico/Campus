@@ -1,16 +1,18 @@
 <div class="form-wrapper" #wrapper>
-	<mk-form (onEnter)="falseClick()" name="registro" [ids]="_ids" [only]="_steps[_step]" [checkerr]="_fieldError" required></mk-form>
+	<div class="wrap_overflow">
+		<mk-form (onEnter)="falseClick()" name="registro" [ids]="_ids" [only]="_steps[_step]" [checkerr]="_fieldError" required></mk-form>
 
-	<ng-container *ngIf="step == 2">
-		<mk-form-select-list-multiple [question]="question" form="registro"></mk-form-select-list-multiple>
-	</ng-container>
+		<ng-container *ngIf="step == 2">
+			<mk-form-select-list-multiple [question]="question" form="registro"></mk-form-select-list-multiple>
+		</ng-container>
 
-	<ng-container *ngIf="_step>=_steps.length-1 && step != 2" [formGroup]="_form_group">
-		<input type="checkbox" id="cbox1" value="first_checkbox" formControlName="registro_accepted_terms"><label style="font-size: 1.5rem; display: inline-block"> He leído y aceptado los <span style="font-weight: bold; text-decoration: underline; text-decoration-color: #0cb1ff;" (click)="openTerms()">Términos y condiciones</span> </label>
-	</ng-container>
-		
-	<button #button mkStepvalidate [form]="_form_group" [filter]="_steps[_step]" class="btn-registration" (onClicked)="nextStep()" (onChecking)="checkError()">{{_butonLabel}}</button>
-	<a routerLink="/public/login"><button *ngIf="_showIngresar" class="btn-registration white-btn">INGRESAR</button></a>
+		<ng-container *ngIf="_step>=_steps.length-1 && step != 2" [formGroup]="_form_group">
+			<input type="checkbox" id="cbox1" value="first_checkbox" formControlName="registro_accepted_terms"><label style="font-size: 1.5rem; display: inline-block"> He leído y aceptado los <span style="font-weight: bold; text-decoration: underline; text-decoration-color: #0cb1ff;" (click)="openTerms()">Términos y condiciones</span> </label>
+		</ng-container>
+
+		<button #button mkStepvalidate [form]="_form_group" [filter]="_steps[_step]" class="btn-registration" (onClicked)="nextStep()" (onChecking)="checkError()">{{_butonLabel}}</button>
+		<a routerLink="/public/login"><button *ngIf="_showIngresar" class="btn-registration white-btn">INGRESAR</button></a>
+	</div>	
 </div>
 
 <div class="terms-wrapper" *ngIf="_showTerms">

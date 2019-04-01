@@ -15,7 +15,6 @@
 		@media all and (min-width: 48em) {
 			max-height: 100vh;
 			overflow: auto;
-			padding: 10vh 5vw;
 		}
 	}
 
@@ -135,5 +134,17 @@
 	.form-group {
 	  border-top: none;
 	  border-bottom: none;
+	}
+}
+
+.watermark {
+	text-align: end;
+	padding: 5vh 0;
+	color: #BBB;
+	p {
+		margin: 0;
+	}
+	.terms-link:hover {
+		text-decoration: underline;
 	}
 }

@@ -57,6 +57,8 @@ export class AcountComponent
 
 	private _fieldError: boolean;
 
+	private _terms_and_conditions: string;
+
 	public constructor ( 
 		private logger: Logger, 
 		private _fs: MkFormService, 
@@ -97,6 +99,8 @@ export class AcountComponent
 		this.inactive = true;
 
 		this._fieldError = false;
+
+		this._terms_and_conditions = new Array(environment.pathCampus,environment.pathTermsAndConditions).join('/');
 	}
 
 	public ngOnInit () : void

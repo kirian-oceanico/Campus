@@ -1,4 +1,5 @@
-import { Component, Inject, ViewContainerRef, ViewChild, ElementRef }                         	from '@angular/core';
+import { Component, Inject, ViewContainerRef, ViewChild, ElementRef }   from '@angular/core';
+import { Location }                                                     from '@angular/common'
 import { Observable, BehaviorSubject, Subscription } 					from "rxjs/Rx";
 
 import { Router }                                                       from '@angular/router';
@@ -7,7 +8,7 @@ import { environment }													from '../../../environments/environment';
 
 import { UserService }                                                  from '../../services/user.service';
 
-import { Logger, MkFormService, MkForm, Loader }								from 'mk';
+import { Logger, MkFormService, MkForm, Loader }						from 'mk';
 
 @Component({
 	templateUrl: './password-change.component.html',
@@ -23,7 +24,7 @@ export class PasswordChangeComponent
     private _showResponse: boolean;
     private _response_obj: {title:string,text:string,img:string,btn:string,callback:any};
 
-	public constructor ( private _logger: Logger, private _router: Router, private _fs: MkFormService, private _us: UserService, private _loader: Loader ) 
+	public constructor ( private _logger: Logger, private _router: Router, private _fs: MkFormService, private _us: UserService, private _loader: Loader, private _location : Location ) 
 	{ 
 		_logger.log('PasswordChangeComponent');
 
@@ -109,5 +110,9 @@ export class PasswordChangeComponent
     {
         this._router.navigate([environment.pathCampus + '/' + environment.pathAcount])
     }
+
+    private backClick() {
+		this._location.back();
+	}
 }
 

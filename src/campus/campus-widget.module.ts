@@ -22,6 +22,7 @@ import { CertificateRequestComponent }							from './components/certificate-requ
 import { PasswordChangeComponent }								from './components/password-change/password-change.component';
 import { AvatarComponent }										from './components/avatar/avatar.component';
 import { CropperComponent }										from './components/cropper/cropper.component';
+import { TermsAndConditionsComponent }							from './components/terms-and-conditions/terms-and-conditions.component';
 
 import { SharedModule }											from '../shared/shared.module';
 
@@ -77,7 +78,8 @@ import { LogOutComponent } from './components/log-out/log-out.component';
 		CropperComponent, 
 		DraggableDirective,
 		LogOutComponent,
-		CourseActivacionComponent
+		CourseActivacionComponent,
+		TermsAndConditionsComponent
 	],
 	exports: 		[ CampusComponent ]
 })

@@ -11,6 +11,7 @@ export const environment = {
   pathLogin: 'login',
   pathRegistro: 'registro',
   pathPassRecovery: 'recuperar',
+  pathTermsAndConditions: 'terminos-y-condiciones', 
 
   pathCampus: 'campus',
   pathAcount: 'mi-cuenta',

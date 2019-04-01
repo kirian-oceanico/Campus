@@ -17,6 +17,16 @@
   	}
   }
 
+  .wrap_overflow {
+		max-height: 90vh;
+    overflow: auto;
+		padding: 0;
+	
+		@media all and (min-width: 48em) {
+		  padding: 10vh 0;
+		}
+  }
+
   .terms-wrapper {
   	position: absolute;
     top: -60px;
@@ -42,14 +52,14 @@
   	  height: 100%;  
   	  h1 {
   	  	font-size: 2.7rem;
-	  }		  
+	  	}		  
   	  p {
   	  	font-size: 1.5rem;
   	  }  	  
   	  button {
   	  	margin: 0px auto;
   	  	width:50%;
-	  }		  
+	  	}		  
   	  @media all and (min-width: 48em) {
   	  	h1 {
   	  	  font-size: 3.5rem;

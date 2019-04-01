@@ -12,6 +12,7 @@ import { UserService }																			from './services/user.service';
 
 import { AuthService } from '../shared/services/auth.service';
 import { CertificatesService } from './services/certificates.service';
+import { PrivacyService } 	from './services/privacy.service';
 
 
 @NgModule({
@@ -45,8 +46,12 @@ export class CampusServiceModule
 					provide: CertificatesService,
 					useClass: CertificatesService,
 					deps: [ Http ]
+				},
+				{
+					provide: PrivacyService,
+					useClass: PrivacyService,
+					deps: [ Http ]
 				}
-
 			]
 		}
 	}

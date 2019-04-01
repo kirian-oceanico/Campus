@@ -12,7 +12,8 @@
         "favicon.ico",
         "forms.config.json",
         "forms",
-        "mocks"
+        "mocks",
+        "privacidad"
       ],
       "index": "index.html",
       "main": "main.ts",

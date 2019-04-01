@@ -1,0 +1,28 @@
+@import '~scss/abstracts/variables';
+
+.wrapper {
+  max-height: 100vh;
+  overflow: auto;
+  padding: 5vh 5vw;
+  @media all and (min-width: 48em) {
+    margin-top: 0;
+  }
+}
+
+.button-back {
+  position: fixed;
+  bottom: 5vh;
+  right: 2vw;
+  background: $color-certificaciones;
+  padding: 13px 20px;
+  border-radius: 50%;
+  font-size: 2rem;
+  color: white;
+  box-shadow: 1px 1px 1px darken($color-certificaciones, 50);
+  cursor: pointer;
+  &:active {
+    box-shadow: none;
+    bottom: 4.75vh;
+    right: 1.75vw;
+  }
+}

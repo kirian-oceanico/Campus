@@ -20,12 +20,15 @@ export class CampusComponent
 	private _courses: string;
 	private _certificates: string;
 	private _acount: string;
+	private _terms_and_conditions: string;
 
 	private _outer_class: string;
 
 	private _cuenta : boolean;
 	private _cursos : boolean;
 	private _certificados : boolean;
+	private _terminos : boolean;
+	private _password : boolean;
 
 	private _currentWindowWidth: number;
 
@@ -35,12 +38,14 @@ export class CampusComponent
 		this._acount =  new Array(environment.pathCampus,environment.pathAcount).join('/');
 		this._courses = new Array(environment.pathCampus,environment.pathCourses).join('/');
 		this._certificates = new Array(environment.pathCampus,environment.pathCertificates).join('/');
+		this._terms_and_conditions = new Array(environment.pathCampus,environment.pathTermsAndConditions).join('/');
 		this._subscriptions = new Array();
 		this._outer_class = '';
 
 		this._cuenta = true;
 		this._cursos = false;
 		this._certificados = false;
+		this._terminos = false;
 	}
 
 	public ngOnInit () : void
@@ -81,18 +86,14 @@ export class CampusComponent
 	}
 
 	private activeClass (cl) {
-		if ( cl === 'mi-cuenta') {
-			this._cuenta = true;
-			this._cursos = false;
-			this._certificados = false;
-		} else if ( cl === 'mis-cursos' ) {
-			this._cuenta = false;
-			this._cursos = true;
-			this._certificados = false;
-		} else if ( cl === 'mis-certificaciones' ) {
-			this._cuenta = false;
-			this._cursos = false;
-			this._certificados = true;
-		}
+		cl === 'mi-cuenta' ? this._cuenta = true : this._cuenta = false;
+
+		cl === 'mis-cursos' ? this._cursos = true : this._cursos = false;
+
+		cl === 'mis-certificaciones' ? this._certificados = true : this._certificados = false;
+
+		cl === 'terminos-y-condiciones' ? this._terminos = true : this._terminos = false;
+
+		cl === 'cambiar-contrasena' ? this._password = true : this._password = false;
 	}
 }

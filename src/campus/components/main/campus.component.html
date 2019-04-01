@@ -35,9 +35,17 @@
 	  <section class="container-right col-md-7 col-lg-8 col-xl-8 d-flex align-items-center justify-content-center"
 			   [ngClass]="{ container_right__cuenta : _cuenta === true,
 							container_right__cursos : _cursos === true,
-							container_right__certificados : _certificados === true }">
+							container_right__certificados : _certificados === true,
+							container_right__terminos : _terminos === true,
+							container_right__password : _password === true }">
   
-      		<router-outlet></router-outlet>
+			<router-outlet></router-outlet>
+			  
+			<div class="watermark"
+				[ngClass]="{ watermark_hidden : _cuenta === true || _terminos === true }">
+				<p>© 2019 • Grupo Oceano • Unidad Digital • Todos los derechos reservados.</p>
+				<p class="terms-link"><a routerLink="/{{_terms_and_conditions}}">Términos y Condiciones</a></p>
+			</div>
 
     	</section>
     
