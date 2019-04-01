@@ -1,4 +1,8 @@
 .wrapper {
+  background-color: white;
+  box-shadow: 6px 6px 12px rgba(0,0,0,.5);
+  padding: 1vh 1vw;
+
   i {
     display: flex;
     flex-direction: row-reverse;
@@ -7,9 +11,15 @@
 
   .course_info {
     text-align: center;
+    padding: 0 1vw 2vh;
 
     .course_info__message {
       padding: 15px 10px 0px;
     }
   }
+}
+
+::ng-deep .mat-dialog-container {
+	background-color: transparent;
+	box-shadow: none; 
 }

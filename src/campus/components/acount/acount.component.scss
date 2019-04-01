@@ -123,24 +123,17 @@
 	}
 }
 
-::ng-deep {
-  .custom-dialog {
-		.mat-dialog-container {
-		  background-color: transparent;
-		  box-shadow: none; 
-		}
+::ng-deep .custom-dialog {
+	.form-group li:last-child {
+	  border-bottom: none;
+	}
 
-		.form-group li:last-child {
-		  border-bottom: none;
-		}
-
-		.form-group li:first-child {
-		  border-top: none;
-		}
-
-		.form-group {
-		  border-top: none;
-		  border-bottom: none;
-		}
-  }
+	.form-group li:first-child {
+	  border-top: none;
+	}
+	
+	.form-group {
+	  border-top: none;
+	  border-bottom: none;
+	}
 }
