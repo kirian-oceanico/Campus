@@ -25,6 +25,7 @@ export class CourseActivacionComponent
     @Output() close = new EventEmitter<boolean>();
     @Input('course') set course ( c: any )
 	{
+        this._course = c;
 		this._id = c.id;
 		this._title = c.name;
 		this._code = c.license ? c.license.code : null;
@@ -33,6 +34,7 @@ export class CourseActivacionComponent
 
 	private _suite: string;
 
+    private _course : any;
 	private _id: number|string;
 	private _title: string;
 	private	_code: string;
@@ -83,6 +85,11 @@ export class CourseActivacionComponent
         ]
     }
 
+    public ngOnInit () : void 
+    {
+		// TO DO - incluir estados del curso en los que el usuario pueda abrir el formulario de datos
+        if ( this._course.license.status === 'active' ) this.activar();
+    }
 	public ngOnDestroy () : void 
     { 
         this._subscriptions.forEach( sub => {
@@ -134,7 +141,7 @@ export class CourseActivacionComponent
         } else {
             if (this._step === 0 && this._form_act_group.status === 'VALID') {
                 this._step++;
-            } else if (this._step === 0 && this._form_act_group.status != 'VALID') {
+            } else if (this._step === 0 && this._form_act_group.status !== 'VALID') {
                 this.formHasError('Por favor, revise los campos introducidos');
             } else {
                 this.activarCurso();
@@ -164,7 +171,9 @@ export class CourseActivacionComponent
         if (this._form_act_group.status === 'VALID') {
             let route = '';
 
-            this._id === 1 || this._id === 2 ? route = 'alcala' : route = 'defaultHandler';
+            ( this._id === 1 || this._id === 2 ) ? 
+                route = 'alcala' : 
+                route = 'defaultHandler';
 
             this._us.updateBeforeCourse(data, route, this._code)
             .subscribe( (response: any ) => { 
@@ -234,9 +243,9 @@ export class CourseActivacionComponent
     // ACTIVAR CLICK EN ENTER
 
     private falseClick() {
-        let clickMe = this._button.nativeElement;
+        let clickableButton = this._button.nativeElement;
 
-        clickMe.click();
+        clickableButton.click();
     }
 
     // CERRAR ESTE COMPONENTE

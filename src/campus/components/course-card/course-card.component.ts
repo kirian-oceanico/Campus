@@ -75,21 +75,21 @@ export class CourseCardComponent
 
 		this._form = "course_entidad_" + this._entidad_id + "_default";
 	
-		if (this._state === 'untouched') {
-			this._buttonMessage = 'ACTIVAR';
-		} else if (this._state === 'pending') {
-			this._buttonMessage = 'CEDIDO';
+		( this._state === 'untouched' || this._state === 'active' ) ? 
+			this._inactive = false : 
 			this._inactive = true;
-		} else if (this._state === 'active') {
-			this._buttonMessage = 'INGRESAR';
-		} else if (this._state === 'expired') {
-			this._buttonMessage = 'EXPIRADO';
-			this._inactive = true;
-		} else if (this._state === 'terminated') {
-			this._buttonMessage = 'FINALIZADO';
-			this._inactive = true;
-		} 
 
+		this._buttonMessage = this.getCourseStatusMessage(this._state);
+	}
+
+	private getCourseStatusMessage(state) {
+		return {
+			'untouched' : 'ACTIVAR',
+			'pending' : 'CEDIDO',
+			'active' : 'INGRESAR',
+			'expired' : 'EXPIRADO',
+			'terminated' : 'FINALIZADO'
+		}[state]
 	}
 
 	private muestra () {
@@ -99,16 +99,18 @@ export class CourseCardComponent
 	private go () : void {
 		if (this._state === 'untouched') {
 			this.iniciar.emit(this._currentCourse);
-		} else if (this._state === 'pending') {
-			this.openDialog('CEDIDO');
 		} else if (this._state === 'active') {
 			let tkn: any = this._as.getToken();
 			window.open(environment.ssoRedirectUrl + this._code + '&access_token=' + tkn);
-		} else if (this._state === 'expired') {
-			this.openDialog('EXPIRADO')
-		} else if (this._state === 'terminated') {
-			this.openDialog('FINALIZADO')
+		} else {
+			let status = this.getCourseStatusMessage(this._state);
+			this.openDialog(status);
 		} 
+	}
+
+	private launchForm () : void {
+		// TO DO - incluir estados del curso en los que el usuario pueda abrir el formulario de datos
+		this.iniciar.emit(this._currentCourse);
 	}
 
 	private openDialog (estadoCurso) {

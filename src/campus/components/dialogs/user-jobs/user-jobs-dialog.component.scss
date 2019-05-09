@@ -52,6 +52,12 @@
       @media all and (min-width: 48em) {
         margin: auto 25px;
       }
+      ::ng-deep .heading-para {
+        margin-bottom: 3rem;
+      }
+      ::ng-deep .list-group {
+        max-height: 30vh;
+      }
     }
   }
 

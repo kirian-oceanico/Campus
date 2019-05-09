@@ -25,17 +25,17 @@
 	}
   
 	  .certificates__wrapper__button {
-		margin: auto 0px;
-		color: $color-certificaciones;
-		cursor: pointer;
+			margin: auto 0px;
+			color: $color-certificaciones;
+			cursor: pointer;
 	  }
   
 	  .certificates__wrapper__button_inactive {
-		color: gray;
+			color: white;
 	  }
   
 	  .certificates__wrapper__carousel {
-		overflow: hidden;
+			overflow: hidden;
   
 		  .certificates__wrapper__carousel__flow {
 		    width: 100%;
@@ -71,9 +71,9 @@
 		}
 	
 	  .certificates_progress__bar {
-		height: 100%;
-		border-radius: 25px;
-		background: linear-gradient(to right, lighten($color-certificaciones, 10), darken($color-certificaciones, 10));
-		transition: width 1.5s;
+			height: 100%;
+			border-radius: 25px;
+			background: linear-gradient(to right, lighten($color-certificaciones, 10), darken($color-certificaciones, 10));
+			transition: width 1.5s;
 	  }
 	}

@@ -20,9 +20,9 @@ export class CertificatesComponent
     private amount : any;
     private _first : boolean;
     private _last : boolean;
-    private _cardsPerShow : any;
-    private barWidth : any;
-    private singleWidth : any;
+    private _cardsShown : any;
+    private progressBarWidth : any;
+    private progressBarWidthPerCard : any;
 
     private _showRequest: boolean;
     private _sent: boolean;
@@ -43,7 +43,7 @@ export class CertificatesComponent
         this._sent = false;
 
         this.amount = 0;
-        this.barWidth = 0;
+        this.progressBarWidth = 0;
 
         this._response_obj = {
             title: '',
@@ -83,14 +83,7 @@ export class CertificatesComponent
     private subscribeCourses () : Subscription
     {
         return this._cs.courses.subscribe( ( certificates : any ) => {
-            let availableCertificates = [];
-
-            for (let certificate of certificates) {
-                if ( certificate.license.status === 'terminated' ) {
-                    availableCertificates.push(certificate)
-                } 
-            }
-            this._certificates = availableCertificates;
+            this._certificates = certificates.filter( certificate => certificate.license.status === 'terminated' );          
         });
     }
 
@@ -98,47 +91,45 @@ export class CertificatesComponent
         let cardWidth = this._certificado._results[0].nativeElement.clientWidth;
         let containerWidth = this._carousel.nativeElement.clientWidth;
 
-        this._cardsPerShow = containerWidth / cardWidth;
+        this._cardsShown = containerWidth / cardWidth;
 
         let totalCards = this._certificado._results.length;
 
-        let totalWidth = cardWidth * (totalCards - this._cardsPerShow);
+        let maxValueTranslateX = cardWidth * (totalCards - this._cardsShown);
 
-        this.singleWidth = 100 / this._certificates.length;
+        this.progressBarWidthPerCard = 100 / this._certificates.length;
 
-        if ( this.barWidth === 0 ) {
-            this.barWidth = this.singleWidth * this._cardsPerShow;
-        }
+        if ( this.progressBarWidth === 0 ) this.progressBarWidth = this.progressBarWidthPerCard * this._cardsShown;
 
-        if ( cardWidth < totalWidth + this.amount ) {
+        //el valor de translateX tiene que disminuir para avanzar
+        if ( cardWidth < maxValueTranslateX + this.amount ) {
             this.amount -= cardWidth;
-            this.barWidth += this.singleWidth;
+            this.progressBarWidth += this.progressBarWidthPerCard;
             this._first = false;
-        } else if ( totalWidth > -this.amount ) {
-            let resto = totalWidth + this.amount;
+        } else if ( maxValueTranslateX > -this.amount ) {
+            let resto = maxValueTranslateX + this.amount;
             this.amount -= resto;
         }
 
-        if ( totalWidth === -this.amount ) {
+        if ( maxValueTranslateX === -this.amount ) {
             this._last = true;
-            this.barWidth = 100;
+            this.progressBarWidth = 100;
         }
     };
 
     public minusSlide () : void {
         let cardWidth = this._certificado._results[0].nativeElement.clientWidth;
 
+        //el valor de translateX tiene que aumentar para retroceder
         if ( -this.amount >= cardWidth ) {
             this.amount += cardWidth;
-            this.barWidth -= this.singleWidth;
+            this.progressBarWidth -= this.progressBarWidthPerCard;
             this._last = false;
         } else {
             this.amount = 0;
         }
 
-        if ( this.amount === 0 ) {
-            this._first = true;
-        }
+        if ( this.amount === 0 ) this._first = true;
     }
 
     private showRequest ( code: string ) : void

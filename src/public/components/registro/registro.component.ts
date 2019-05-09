@@ -111,11 +111,10 @@ export class RegistroComponent
 	private _subscriptions: Array<any>;
     private _ids: any;
     private _showTerms: boolean;
-    private _checkDisable: boolean;
 
     private _question: any;
 
-    private _sended: boolean;
+    private _sent: boolean;
     private _response_obj: {title:string,text:string,img:string,btn:string,callback:any};
     private _error: boolean;
     private _fieldError: boolean;
@@ -148,7 +147,7 @@ export class RegistroComponent
 		this._form_group = new FormGroup({});
         this._subscriptions = new Array();
         
-        this._sended = false;
+        this._sent = false;
         this._response_obj = {
             title: '',
             text: '',
@@ -186,7 +185,7 @@ export class RegistroComponent
         
                 let especialization_to_reset = this._form.find('registro_especialization_2');
 
-                if(q.key == 'registro_especialization_2') {
+                if ( q.key == 'registro_especialization_2' ) {
                     q.options = especialidad[val];
 
                     especialization_to_reset.setValue(null);
@@ -196,11 +195,11 @@ export class RegistroComponent
                     this._steps[4] = aux;
                 };
 
-                if (q.key == 'registro_job_2') {
+                if ( q.key == 'registro_job_2' ) {
                     q.value = val;
                 }
 
-                if (q.key == 'registro_college_2') {
+                if ( q.key == 'registro_college_2' ) {
                     q.value = new_college;
                 }
             });
@@ -213,7 +212,7 @@ export class RegistroComponent
         .map( forms => forms.find( form => form.name === "registro" ) )
         .subscribe( form =>
         {
-            if (form) 
+            if ( form ) 
             { 
                 this._form = form; 
                 this._form_group = this._form.formGroup;
@@ -224,9 +223,9 @@ export class RegistroComponent
     }
 
     private falseClick() {
-        let clickMe = this._button.nativeElement;
+        let clickableButton = this._button.nativeElement;
 
-        clickMe.click();
+        clickableButton.click();
     }
 
     private nextStep () : void
@@ -244,16 +243,11 @@ export class RegistroComponent
             this._showIngresar = this._step >= 1 && this._step < len ? false : true;
             this._butonLabel = this._step === len ? 'REGISTRARSE' : 'SIGUIENTE';
 
-            if ( this._step == 1 ) {
-                this.renderer.addClass(this._wrapper.nativeElement, 'margin-small');
-            };
-
             if ( this._step == 2 ) {
-                this.renderer.removeClass(this._wrapper.nativeElement, 'margin-small');
                 let job:any = this._form.find('registro_job').value || 'Médico';
 
                 this._fs.getFormQuestions('registro').map( (q:any) => {
-                    if(q.key == 'registro_especialization') {
+                    if( q.key == 'registro_especialization' ) {
                         q.options = especialidad[job.value];
 
                         this._question = q;
@@ -263,14 +257,13 @@ export class RegistroComponent
 
             if ( this._step == 3 ) {
                 this._fs.getFormQuestions('registro').map( (q:any) => {
-                    if(q.key == 'registro_college') {
+                    if ( q.key == 'registro_college' ) {
                         q.value = 'Sin colegio';
                     };
                 });
             };
 
             if ( this._step == 4 ) {
-                this.renderer.addClass(this._wrapper.nativeElement, 'margin-big');
                 let job:any = control_job.value || 'Médico';
                 let college:any = control_college.value;
 
@@ -308,10 +301,10 @@ export class RegistroComponent
                     { 'especialization': aux.registro_especialization },
                     { 'college': aux.registro_college }
                 ],
-                    'redirect': redirect_url
+                'redirect': redirect_url
             };
 
-            if (aux.registro_accepted_terms === true) {
+            if ( aux.registro_accepted_terms === true ) {
                 this.send(data);
             } else {
                 let dialogRef = this._dialog.open(RegistroDialogComponent, {
@@ -365,7 +358,7 @@ export class RegistroComponent
             },
             ( ) => { 
                 this._loader.dismiss('registro');
-                this._sended = true;
+                this._sent = true;
             }
         );
     }

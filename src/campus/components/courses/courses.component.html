@@ -5,7 +5,8 @@
 	</h1>
 	<div class="courses__wrapper">
 		<div class="courses__wrapper__button"
-			 [ngClass]="{ courses__wrapper__button_inactive : _first === true }">
+			 [ngClass]="{ courses__wrapper__button_inactive : _first === true }"
+			 *ngIf="_currentWindowWidth > 768">
 			<i class="material-icons"
 			   (click)="minusSlide()">
 				arrow_back_ios
@@ -24,7 +25,8 @@
 		</div>
 
 		<div class="courses__wrapper__button"
-			 [ngClass]="{ courses__wrapper__button_inactive : _last === true }">
+			 [ngClass]="{ courses__wrapper__button_inactive : _last === true }"
+			 *ngIf="_currentWindowWidth > 768">
 			<i class="material-icons"
 			   (click)="plusSlide()">
 				arrow_forward_ios
@@ -35,9 +37,9 @@
 
 <div class="courses_progress">
 	<div class="courses_progress__bar"
-		 [style.width]="''+barWidth+'%'"></div>
+		 [style.width]="''+progressBarWidth+'%'"></div>
 </div>	
 
 <course-activacion [course]="_currentCourse" *ngIf="showInicio" (close)="onClose($event)"></course-activacion>
 	
-
+<terms-footer></terms-footer>

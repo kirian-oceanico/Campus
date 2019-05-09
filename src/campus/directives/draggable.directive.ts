@@ -10,8 +10,8 @@ import { DOCUMENT } from '@angular/platform-browser';
 })
 export class DraggableDirective 
 {
-    @HostListener('mousedown', ['$event']) onMousedown(event) { return this._mousedown.next(event); }
-
+    @HostListener('mousedown', ['$event']) 
+    @HostListener ('touchstart', ['$event']) onMousedown(event) { return this._dragStart.next(event); }
     @Input('draggable') set _enabled (state:boolean )
     { 
         this._element.nativeElement.style.position = state ? 'relative' : 'static';
@@ -20,10 +20,10 @@ export class DraggableDirective
     private _switches: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     private _query: Observable<any> = this._switches.distinctUntilChanged().takeWhile(on => on);
 
-    private _mousedrag: Observable<any>;
-    private _mouseup: Observable<any>;
-    private _mousedown: EventEmitter<any> = new EventEmitter();
-    private _mousemove: Observable<any>;
+    private _dragImage: Observable<any>;
+    private _dragUp: Observable<any>;
+    private _dragStart: EventEmitter<any> = new EventEmitter();
+    private _dragMove: Observable<any>;
 
     private _subscriptions: Array<Subscription>;
 
@@ -33,10 +33,16 @@ export class DraggableDirective
         this._element.nativeElement.style.position = 'relative';
         this._element.nativeElement.style.cursor = 'pointer';
 
-        this._mousemove = Observable.fromEvent( _document, 'mousemove');
-        this._mouseup = Observable.fromEvent( _document, 'mouseup');
+        let mouseMove = Observable.fromEvent( _document, 'mousemove' );
+        let mouseUp = Observable.fromEvent( _document, 'mouseup' );
+        
+        let touchMove = Observable.fromEvent( _document, 'touchmove' );
+        let touchUp = Observable.fromEvent( _document, 'touchend' );
+        
+        this._dragMove = Observable.merge( mouseMove, touchMove );
+        this._dragUp = Observable.merge( mouseUp, touchUp );
 
-        this._mousedrag = this.mouseDrag();
+        this._dragImage = this.dragImage();
     }
 
     public ngOnInit() : void
@@ -54,33 +60,43 @@ export class DraggableDirective
         this._subscriptions.length = 0;
     }
 
-    private mouseDrag () : Observable<any>
+    private dragImage () : Observable<any>
     {
         let el: HTMLElement = this._element.nativeElement;
         let pa: HTMLElement = el.parentElement; 
         
-        return this._mousedown.map( (event:any) => 
+        return this._dragStart.map( (event:any) => 
         {
-            console.log(this._enabled);
             event.preventDefault();
-            let left: number = event.clientX + (pa.offsetLeft - Math.abs(el.offsetLeft));
-            let top: number = event.clientY + (pa.offsetTop - Math.abs(el.offsetTop));
-            return { left: left, top: top };
+
+            let clientX = event.clientX ? event.clientX : event.changedTouches[0].clientX;
+            let clientY = event.clientY ? event.clientY : event.changedTouches[0].clientY;
+
+            let left: number = clientX + (pa.offsetLeft - Math.abs(el.offsetLeft));
+            let top: number = clientY + (pa.offsetTop - Math.abs(el.offsetTop));
+            
+            return { top: top, left: left };
         })
         .flatMap( imageOffset => 
         { 
-            return this._mousemove.map( (pos:any) => 
+            return this._dragMove.map( (pos:any) => 
             {
-                return { top:  pos.clientY - imageOffset.top, left: pos.clientX - imageOffset.left }
+                let posX = pos.clientX ? pos.clientX : pos.changedTouches[0].clientX;
+                let posY = pos.clientY ? pos.clientY : pos.changedTouches[0].clientY;
+
+                let posTop = posY - imageOffset.top;
+                let posLeft = posX - imageOffset.left;
+                
+                return { top: posTop, left: posLeft }
             })
-            .takeUntil(this._mouseup);
+            .takeUntil( this._dragUp );
         });
 
     }
 
     private subscribeDragging () : Subscription
     {
-        return this._mousedrag
+        return this._dragImage
         .subscribe( (pos:any) => 
         {
             // Update position

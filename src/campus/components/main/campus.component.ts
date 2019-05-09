@@ -20,7 +20,6 @@ export class CampusComponent
 	private _courses: string;
 	private _certificates: string;
 	private _acount: string;
-	private _terms_and_conditions: string;
 
 	private _outer_class: string;
 
@@ -38,7 +37,6 @@ export class CampusComponent
 		this._acount =  new Array(environment.pathCampus,environment.pathAcount).join('/');
 		this._courses = new Array(environment.pathCampus,environment.pathCourses).join('/');
 		this._certificates = new Array(environment.pathCampus,environment.pathCertificates).join('/');
-		this._terms_and_conditions = new Array(environment.pathCampus,environment.pathTermsAndConditions).join('/');
 		this._subscriptions = new Array();
 		this._outer_class = '';
 

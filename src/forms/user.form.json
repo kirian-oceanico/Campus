@@ -24,7 +24,8 @@
 	    "required": true,
 	    "order": 2,
 	    "maxlength": "80",
-	    "type": "text"
+		"type": "text",
+		"disabled": true
     },
     {
 	    "key": "oauth_user_email",
@@ -33,7 +34,8 @@
 	    "required": true,
 	    "order": 2,
 	    "maxlength": "80",
-	    "type": "email"
+		"type": "email",
+		"disabled": true
     },
     {
 	    "key": "user_details_prefix",
@@ -42,7 +44,8 @@
 	    "required": false,
 	    "order": 2,
 	    "maxlength": "80",
-	    "type": "text"
+		"type": "text",
+		"onlynumbers": true
     },
     {
 	    "key": "oauth_user_phone",
@@ -51,7 +54,8 @@
 	    "required": true,
 	    "order": 2,
 	    "maxlength": "80",
-	    "type": "text"
+		"type": "text",
+		"onlynumbers": true
     },
     {
 	    "key": "oauth_user_password",

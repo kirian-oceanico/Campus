@@ -54,8 +54,7 @@ export class CropperComponent
     private crop () : void
     {
         let cropper: HTMLElement = this._cropper.nativeElement;
-        let img: HTMLElement = this._img.nativeElement;
-
+        let img: any = this._img.nativeElement;
         let left: number = cropper.offsetLeft - img.offsetLeft;
         let top: number =  cropper.offsetTop - img.offsetTop;
         let width: number = cropper.offsetWidth;
@@ -70,7 +69,7 @@ export class CropperComponent
 
         crop_canvas.getContext('2d').drawImage(this._img.nativeElement, left, top, width, height, 0, 0, width, height);
         
-        this.cropped = dataURL = crop_canvas.toDataURL("image/png");
+        this.cropped = dataURL = img.src.indexOf('http://') !== 0 ? crop_canvas.toDataURL("image/png") : this.data.currentAvatar;
 
         this._img.nativeElement.src = dataURL;
         
@@ -86,5 +85,12 @@ export class CropperComponent
     {
         this._img.nativeElement.left = 0;
         this._img.nativeElement.top = 0;
+    }
+
+    private reset () : void
+    {
+        this._img.nativeElement.src = this.data.currentAvatar;
+        this._img.nativeElement.style.left = '0px';
+        this._img.nativeElement.style.top = '0px';
     }
 }

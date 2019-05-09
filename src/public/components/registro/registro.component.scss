@@ -7,32 +7,38 @@
   }
 
   .form-wrapper {
-  	margin-top: 280px;
+	position: absolute;
+	left: 5vw;
+	top: 0;
   	margin-bottom: 40px;
   	background-color: white;
-  	padding: 5vh 6vw;
+	padding: 5vh 6vw;
+	@media all and (min-width: 28em) {
+	  left: 22.5vw;
+	}
+
   	@media all and (min-width: 48em) {
+	  position: static;
   	  padding: 0px;
   	  margin: 0px;
   	}
   }
 
   .wrap_overflow {
-		max-height: 90vh;
-    overflow: auto;
-		padding: 0;
-	
-		@media all and (min-width: 48em) {
-		  padding: 10vh 0;
-		}
+	@media all and (min-width: 48em) {
+	  max-height: 90vh;
+	  overflow: auto;
+	}
+	.btn-registration {
+	  margin: 4rem auto 0;
+	}
   }
 
   .terms-wrapper {
   	position: absolute;
-    top: -60px;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
+    top: 0;
+    left: 0;
+    right: 0;
     background-color: white;
   	margin: 10px;
   	height: 600px;
@@ -51,15 +57,15 @@
   	  background-color: white;
   	  height: 100%;  
   	  h1 {
-  	  	font-size: 2.7rem;
-	  	}		  
+  	    font-size: 2.7rem;
+	  }		  
   	  p {
   	  	font-size: 1.5rem;
   	  }  	  
   	  button {
   	  	margin: 0px auto;
   	  	width:50%;
-	  	}		  
+	  }		  
   	  @media all and (min-width: 48em) {
   	  	h1 {
   	  	  font-size: 3.5rem;
@@ -68,20 +74,6 @@
   	  	  font-size: 1.7rem;
   	  	}
   	  }
-  	}
-  }
-
-  .margin-small {
-  	margin-top: 20px;
-  	@media all and (min-width: 48em) {
-  		margin-top: 0px;
-  	}
-  }
-
-  .margin-big {
-  	margin-top: 430px;
-  	@media all and (min-width: 48em) {
-  		margin-top: 0px;
   	}
   }
 }
