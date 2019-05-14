@@ -112,21 +112,21 @@
 		}
   }
   .container_right__cursos {
-		margin-top: 34vh;
+		margin-top: 49vh;
 		@media all and (min-height: 500px) {
-		  margin-top: 16vh;
+		  margin-top: 30vh;
 		}
 		@media all and (min-height: 600px) {
-		  margin-top: 11vh;
+		  margin-top: 25vh;
 		}
   }
   .container_right__certificados {
-		margin-top: 22vh;
+		margin-top: 37vh;
 		@media all and (min-height: 500px) {
-		  margin-top: 16vh;
+		  margin-top: 30vh;
 		}
 		@media all and (min-height: 600px) {
-		  margin-top: 11vh;
+		  margin-top: 25vh;
 		}
 	}
 	
@@ -145,22 +145,4 @@
 		  margin-top: 0px;
 		}
   }
-}
-
-.watermark {
-	position: fixed;
-	bottom: 15px;
-	right: 5vw;
-	text-align: end;
-	color: #BBB;
-	p {
-		margin: 0;
-	}
-	.terms-link:hover {
-		text-decoration: underline;
-	}
-}
-
-.watermark_hidden {
-	display: none;
 }

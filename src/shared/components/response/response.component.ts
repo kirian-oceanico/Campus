@@ -70,9 +70,9 @@ export class ResponseComponent
     }
 
     private falseClick() {
-        let clickMe = this._button.nativeElement;
+        let clickableButton = this._button.nativeElement;
 
-        clickMe.click();
+        clickableButton.click();
     }
 
     private onClick () : void

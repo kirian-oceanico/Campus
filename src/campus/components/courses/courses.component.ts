@@ -22,9 +22,9 @@ export class CoursesComponent
 	public amount : any;
 	private _first : boolean;
 	private _last : boolean;
-	private _cardsPerShow : any;
-	private barWidth : any;
-	private singleWidth : any;
+	private _cardsShown : any;
+	private progressBarWidth : any;
+	private progressBarWidthPerCard : any;
 	private showInicio : boolean;
 	private _currentCourse : any;
 
@@ -39,7 +39,7 @@ export class CoursesComponent
 		logger.log('COURSES COMPONENT'); 
 		this._subscriptions = new Array();
 		this.amount = 0;
-		this.barWidth = 0;
+		this.progressBarWidth = 0;
 		this.showInicio = false;
 	}
 
@@ -77,66 +77,48 @@ export class CoursesComponent
 	}
 	
 	public plusSlide () : void {
-		// tamaño de una sola card y del div con todas
 		let cardWidth = this._curso._results[0].nativeElement.clientWidth;
 		let containerWidth = this._carousel.nativeElement.clientWidth;
 
-		// total de cards en pantalla
-		this._cardsPerShow = containerWidth / cardWidth;
+		this._cardsShown = containerWidth / cardWidth;
 
 		let totalCards = this._curso._results.length;
 
-		// valor máximo q se aplicará a translateX
-		let totalWidth = cardWidth * (totalCards - this._cardsPerShow);
+		let maxValueTranslateX = cardWidth * (totalCards - this._cardsShown);
 
-		// % de la barra de progreso para una card respecto al total
-		this.singleWidth = ( 100 / (this._courses.length) );
+		this.progressBarWidthPerCard = ( 100 / (this._courses.length) );
 
-		// width de la barra de progeso al iniciarse el carousel
-		if ( this.barWidth === 0 ) {
-			this.barWidth =  this.singleWidth * this._cardsPerShow;	
-		}
+		if ( this.progressBarWidth === 0 ) this.progressBarWidth =  this.progressBarWidthPerCard * this._cardsShown;	
 		
-		// el valor de this.amount es negativo
-
-		/* al dismunir el valor el carousel se esconde por la izquierda
-		y vemos las cards q están por la derecha */
-
-		// en cada click aumentamos el % de la barra de progreso
-		if ( cardWidth < totalWidth + this.amount ) {
+        //el valor de translateX tiene que disminuir para avanzar
+		if ( cardWidth < maxValueTranslateX + this.amount ) {
 			this.amount -= cardWidth;
-			this.barWidth += this.singleWidth;
-			// cuando la cardWidth es mayor al valor de translate, se está en la primera card
+			this.progressBarWidth += this.progressBarWidthPerCard;
 			this._first = false;
-		/* cuando el cardWith es mayor al valor de referencia pero this.amount es inferior
-			al valor de totalWidth... */
-		} else if ( totalWidth > -this.amount ) {
-			// calculamos el valor restante para q this.amount sea igual a totalWidth
-			let resto = totalWidth + this.amount;
+		} else if ( maxValueTranslateX > -this.amount ) {
+			let resto = maxValueTranslateX + this.amount;
 			this.amount -= resto;
 		} 
 		
-		// desactivar el botón de plus al llegar al final del carousel, marcar progreso al máx
-		if ( totalWidth === -this.amount ) {
+		if ( maxValueTranslateX === -this.amount ) {
 			this._last = true;
-			this.barWidth = 100;
+			this.progressBarWidth = 100;
 		}
 	};
 
 	public minusSlide () : void {
 		let cardWidth = this._curso._results[0].nativeElement.clientWidth;
 
-		if (-this.amount >= cardWidth) {
+        //el valor de translateX tiene que aumentar para retroceder
+		if ( -this.amount >= cardWidth ) {
 			this.amount += cardWidth;
-			this.barWidth -= this.singleWidth
+			this.progressBarWidth -= this.progressBarWidthPerCard
 			this._last = false;
 		} else {
 			this.amount = 0;
 		}
 
-		if (this.amount === 0) {
-			this._first = true;
-		}
+		if ( this.amount === 0 ) this._first = true;
 	};
 
 	// ABRIR-CERRAR EL COMPONENTE DE ACTIVACION DE CURSO 

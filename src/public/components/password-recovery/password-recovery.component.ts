@@ -21,21 +21,9 @@ import { PasswordService }                                                      
 })
 export class PasswordRecoveryComponent
 {
-    @ViewChild('recovery') set input ( inp: ElementRef ) {
-        if (inp)
-        {
-            this._input = inp;
-            this._subscriptions = [
-                this.subscribeChanges()
-            ];
-        }
-    }
     @ViewChild('button') private _button: ElementRef;
 
     private _subscriptions: Array<any>;
-
-    private _input: ElementRef;
-    private _mail: string;
 
     private _title: string;
     private _text: string;
@@ -54,7 +42,15 @@ export class PasswordRecoveryComponent
 
     private _publicUrl: string;
 
-    constructor ( private _logger: Logger, private _loader: Loader, private _router: Router, private _route: ActivatedRoute, private _ps: PasswordService, private _fs: MkFormService )
+    private _fieldError: boolean;
+
+    constructor ( 
+        private _logger: Logger, 
+        private _loader: Loader, 
+        private _router: Router, 
+        private _route: ActivatedRoute, 
+        private _ps: PasswordService, 
+        private _fs: MkFormService )
     {
         this._logger.log('PASSWORD-RECOVERY.COMPONENT');
 
@@ -73,6 +69,8 @@ export class PasswordRecoveryComponent
         this._form = null;
 
         this._publicUrl = environment.pathPublic;
+
+        this._fieldError = false;
     }
 
     public ngOnInit () : void
@@ -90,9 +88,9 @@ export class PasswordRecoveryComponent
     }
 
     private falseClick() {
-        let clickMe = this._button.nativeElement;
+        let clickableButton = this._button.nativeElement;
 
-        clickMe.click();
+        clickableButton.click();
     }
 
     private send ( ) : void
@@ -100,14 +98,20 @@ export class PasswordRecoveryComponent
         let form: any;
         if ( this._recovery )
         {
+            form = this._form.getRawValue();
             this._loader.show('password');
-            this._ps.recoveryMail({email: this._mail, url: environment.domain})
+            this._ps.recoveryMail({email: form.recover, url: environment.domain})
             .subscribe( (response:any) =>
             {
                 let res: any = response.json();
                 if ( res.code === 200 )
                 {
-                    this.setResponseRecoveryMail(res);
+                    //handle the response in case of phone or e-mail submitted
+                    isNaN(form.recover) === true ? this.setResponseRecoveryMail(res) : this.setResponseRecoveryPhone(res);
+                }
+                else 
+                {
+                    this.setResponseError(res);
                 }
                 this._show_response = true;
                 this._loader.dismiss('password');
@@ -158,9 +162,19 @@ export class PasswordRecoveryComponent
         };
     }
 
+    private setResponseRecoveryPhone ( res: any ) : void
+    {
+        this._response_obj = {
+            title: 'Te acabamos de enviar un SMS',
+            text: 'Sigue las instrucciones para completar la petición',
+            img: 'assets/img/icon-plane.png',
+            btn: 'REENVIAR MENSAJE',
+            callback: this.send
+        };
+    }
+
     private setResponseNewPass ( res: any ) : void
     {
-        debugger
         this._response_obj = {
             title: 'Tu constraseña ha sido modificada con éxito.',
             text: '',
@@ -170,29 +184,41 @@ export class PasswordRecoveryComponent
         };
     }
 
-    private subscribeQuestionForm () : Subscription
+    private setResponseError ( res: any ) : void
     {
-        return this._fs.forms
-        .map( forms => forms.find( form => form.name === 'passchange' ))
-        .subscribe( form =>
-        {
-            if (form) { this._form = form.formGroup; }
-        });
+        this._response_obj = {
+            title: 'HA OCURRIDO UN ERROR',
+            text: 'No se ha podido procesar su petición. Por favor, inténtelo más tarde.',
+            img: '',
+            btn: 'VOLVER A LOG IN',
+            callback: this.goToLogin
+        }
     }
 
-    private subscribeChanges () : Subscription
+    private subscribeQuestionForm () : Subscription
     {
-        let input = this._input.nativeElement;
+        if (this._recovery) return this._fs.forms
+            .map( forms => forms.find( form => form.name === 'recovery-password' ))
+            .subscribe( form =>
+            {
+                if (form) { 
+                    this._form = form.formGroup;
+                    this._form.reset();
+                }
+            });
+        if (this._change) return this._fs.forms
+            .map( forms => forms.find( form => form.name === 'passchange' ))
+            .subscribe( form =>
+            {
+                if (form) { 
+                    this._form = form.formGroup; 
+                    this._form.reset();
+                }
+            });
+    }
 
-        return Observable.fromEvent( input, 'keyup' )
-        .filter( (e:any) => e.which !== 0 && !e.ctrlKey && !e.altKey )
-        .debounceTime(400)
-        .map((e: any) => e.target.value)
-        .concat()
-        .distinctUntilChanged()
-        .subscribe((query: string) => 
-        {
-            this._mail = query;
-        });
+    private checkError () 
+    {
+        this._fieldError = true;
     }
 }    

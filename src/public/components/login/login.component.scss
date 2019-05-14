@@ -1,9 +1,17 @@
 .wrapper {
+  position: absolute;
+  top: 0;
+  left: 5vw;
   display: flex;
   flex-direction: column;
   background-color: white;
   padding: 7vh 6vw;
+  @media all and (min-width: 28em) {
+    left: 22.5vw;
+  }
+
   @media all and (min-width: 48em) {
+    position: static;
     padding: 0px;
   }
 

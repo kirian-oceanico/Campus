@@ -68,6 +68,6 @@ export class AuthService
 
     public setSession (data: any): Observable<Response> 
     {
-        return this._http.post( environment.ssoUrl + '/sso/set', data );
+        return this._http.post( environment.ssoUrl + '/sso/set_no_redirect', data );
     }
 }

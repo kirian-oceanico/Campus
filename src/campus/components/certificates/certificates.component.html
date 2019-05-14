@@ -6,7 +6,8 @@
 
 	<div class="certificates__wrapper">
 		<div class="certificates__wrapper__button"
-			 [ngClass]="{ certificates__wrapper__button_inactive : _first === true }">
+			 [ngClass]="{ certificates__wrapper__button_inactive : _first === true }"
+			 *ngIf="_currentWindowWidth > 768">
 			<i class="material-icons"
 			   (click)="minusSlide()">
 				arrow_back_ios
@@ -25,7 +26,8 @@
 		</div>
 
 		<div class="certificates__wrapper__button"
-			 [ngClass]="{ certificates__wrapper__button_inactive : _last === true }">
+			 [ngClass]="{ certificates__wrapper__button_inactive : _last === true }"
+			 *ngIf="_currentWindowWidth > 768">
 			<i class="material-icons"
 			   (click)="plusSlide()">
 				arrow_forward_ios
@@ -36,9 +38,11 @@
 
 <div class="certificates_progress">
 	<div class="certificates_progress__bar"
-		 [style.width]="''+barWidth+'%'"></div>
+		 [style.width]="''+progressBarWidth+'%'"></div>
 </div>
 
 <certificate-request *ngIf="_showRequest" (submit)="requestCompleted()" (close)="closeRequest()" [code]="_code"></certificate-request>
 
 <cam-response *ngIf="_sent" [title]="_response_obj.title" [text]="_response_obj.text" [btn]="_response_obj.btn" [img]="_response_obj.img" [callback]="_response_obj.callback.bind(this)"></cam-response>
+
+<terms-footer></terms-footer>

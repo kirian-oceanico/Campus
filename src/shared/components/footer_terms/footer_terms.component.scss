@@ -1,0 +1,15 @@
+.watermark {
+	text-align: end;
+	padding: 5vh;
+	color: #BBB;
+	p {
+		margin: 0;
+	}
+	.terms-link:hover {
+		text-decoration: underline;
+	}
+
+	@media all and (min-width: 48em) {
+		padding: 2vh 0 0;
+	}
+}

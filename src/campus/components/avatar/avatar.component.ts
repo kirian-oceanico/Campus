@@ -32,6 +32,8 @@ export class AvatarComponent
 
 	public _currentUser : Object;
 
+	public _currentAvatar : string;
+
 	public constructor ( 
 		private _logger: Logger, 
 		private _loader: Loader, 
@@ -59,7 +61,7 @@ export class AvatarComponent
 			this._us.get(this._as.getToken())
 			.subscribe( user => 
 			{
-				this.updateSrc(user); 
+				this.updateSource(user); 
 			});
 		}
 	}
@@ -112,7 +114,7 @@ export class AvatarComponent
 		{
 			if ( user )
 			{
-				this.updateSrc(user);
+				this.updateSource(user);
 				this._currentUser = user;
 			}
 		});
@@ -126,9 +128,11 @@ export class AvatarComponent
 		{
 			let d: MatDialogRef<any> = dialogRef;
 			let c: string = d.componentInstance.cropped;
-			this._img.nativeElement.src = c;
 			this._input.nativeElement.value = '';
-			this.saveAvatar(c);
+			if ( c !== undefined) {
+				this._img.nativeElement.src = c;
+				this.saveAvatar(c);
+			}
 		});
 	}
 
@@ -138,26 +142,31 @@ export class AvatarComponent
     	{
     		id: 'user-avatar-cropper-dialog',
     		viewContainerRef: this._vcr,
-      		data: { img: image, rep: this._img }
+      		data: { 
+				img: image, 
+				rep: this._img,
+				currentAvatar: this._currentAvatar
+			}
     	});
     	this.subscribeDialogClosed( dialogRef );
     }
 
     private saveAvatar ( img: string ) : void
     {
-    	this._loader.show('avatar');
-    	this._us.saveAvantar(img)
+		this._loader.show('avatar');
+    	this._us.saveAvatar(img)
     	.first()
     	.subscribe( ( resp: any ) => this._loader.dismiss('avatar') );
     }
 
-    private updateSrc ( user: any ) : void
+    private updateSource ( user: any ) : void
     {
     	user.oauth_user_details.map( (detail:any) => 
 		{
 			if ( Object.keys(detail).find((v:string) => v === 'avatar') )
 			{	
-				this._img.nativeElement.src = detail.avatar;
+				this._currentAvatar = detail.avatar;
+				this._img.nativeElement.src = this._currentAvatar;
 			}
 		});
     } 

@@ -111,11 +111,11 @@ export class AcountComponent
 
 		this._loader.show('acount');
 
-		this._subscriptions = [ this.subscribeUser(), this.subscriptions(obs) ];
+		this._subscriptions = [ this.subscribeUserCurrentDetails(), this.subscribeUserForm(obs) ];
 
 	}
 
-	private subscribeUser () : Subscription
+	private subscribeUserCurrentDetails () : Subscription
 	{
 		return this._us.users
 		.map( users => users.find(user => user['token'] === this._as.getToken()) )
@@ -145,7 +145,7 @@ export class AcountComponent
 		this._loader.dismiss('acount'); 
 	}
 	
-    private subscriptions ( observable: Observable<any> ) : Subscription
+    private subscribeUserForm ( observable: Observable<any> ) : Subscription
     {
     	return observable
     	.switchMap( ( user:any, i:number ) => 
@@ -177,45 +177,37 @@ export class AcountComponent
 
 		let controls : Array<string> = Object.keys(groupControls);
 
-		for (let det in this.initDetails) {
-			if (this.initDetails[det] === undefined) {
-				this.initDetails[det] = '';
-			}
-		};
+		this.initDetails.forEach( detail => detail === undefined ? detail = '' : detail )
 
-		for (let cont in controls) {			
-			groupControls[controls[cont]].valueChanges
-			.debounceTime(1000)
-			.distinctUntilChanged()
-			.subscribe( sub => {
-				let currentDetails = [];
-				for (let control in groupControls) {
-					let value = groupControls[control].value;
-					currentDetails.push(value)
-				};
-
-				if (!this.arraysEqual(currentDetails, this.initDetails)) {
-					this.activateButton();
-				} else {
-					this.disableButton();
-				}
-			});
-		};
+		controls.forEach( control => {			
+			groupControls[control].valueChanges
+				.debounceTime(1000)
+				.distinctUntilChanged()
+				.subscribe( sub => {				
+					let currentDetails = [];
+					for (let control in groupControls) {
+						let value = groupControls[control].value;
+						currentDetails.push(value)
+					};
+					
+					this.arraysAreEqual(currentDetails, this.initDetails) ? 
+						this.disableButton() : 
+						this.enableButton();
+				});
+		});
 	}
 
-	private arraysEqual(arr1, arr2) {
-		if(arr1.length !== arr2.length)
-			return false;
+	private arraysAreEqual (arr1, arr2) {
+		if ( arr1.length !== arr2.length ) return false;
 
-		for(var i = arr1.length; i--;) {
-			if(arr1[i] !== arr2[i])
-			return false;
+		for ( var i = arr1.length; i--; ) {
+			if ( arr1[i] !== arr2[i] ) return false;
 		}
 	
 		return true;
 	}
 
-	private activateButton() {
+	private enableButton() {
 		this.inactive = false;
 		this._renderer.addClass(this._button.nativeElement, 'submit__button_active')
 	}
@@ -331,9 +323,9 @@ export class AcountComponent
 	}
 
 	private falseClick() {
-        let clickMe = this._button.nativeElement;
+        let clickableButton = this._button.nativeElement;
 
-        clickMe.click();
+        clickableButton.click();
 	}
 
 	private showError() {

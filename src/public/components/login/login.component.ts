@@ -66,9 +66,9 @@ export class LoginComponent
     }
 
     private falseClick() {
-        let clickMe = this._button.nativeElement;
+        let clickableButton = this._button.nativeElement;
 
-        clickMe.click();
+        clickableButton.click();
     }
 
     private send () : void
@@ -94,7 +94,7 @@ export class LoginComponent
                 
                 this._as.setSession(aux).first().subscribe((response: Response) =>
                 {
-                    debugger
+                    
                 });
 
                 this._router.navigateByUrl(url);

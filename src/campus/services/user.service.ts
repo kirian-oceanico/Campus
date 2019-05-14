@@ -72,7 +72,7 @@ export class UserService extends DataService<User>
 		});
 	} 
 
-	public saveAvantar ( img: string ) : Observable<any>
+	public saveAvatar ( img: string ) : Observable<any>
 	{
 		let data: any = { 'avatar': img, 'user_id': this._as.getToken() }
 		return this.http.post(this._dsUrl + '/api/user/avatar', data);

@@ -1,7 +1,13 @@
-<div #cropper styel="position: relative">
-	<img #img src="" [draggable]="dragEnabled" (load)="imgLoaded()"/>
+<div class="wrapper">
+	<div #cropper
+		class="cropper-container" >
+		<img #img src="" [draggable]="dragEnabled" (load)="imgLoaded()"/>
+	</div>
+
+	<span>Mové la foto para encuadrarla</span>
+	
+	<div class="button-container">
+		<button class="cropper-button cropper-button_reset" (click)="reset()">RESET</button>	
+		<button class="cropper-button" (click)="crop()">RECORTAR</button>	
+	</div>
 </div>
-
-<span>Mové la foto para encuadrarla</span>
-
-<button class="btn" (click)="crop()">RECORTAR</button>
