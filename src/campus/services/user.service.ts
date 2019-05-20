@@ -14,9 +14,8 @@ import { User, UserInterface }				    		from '../models/user.model';
 
 import { AuthService } from '../../shared/services/auth.service';
 
-export class UserService extends DataService<User>
+export class UserService extends DataService<User> 
 {
-
 	private _dsUrl: string = environment.dsUrl;
 	private _apiUrl: string = environment.apiUrl;
 
@@ -81,6 +80,15 @@ export class UserService extends DataService<User>
 	public getUserData ( productLicense : string ) : Observable<any> 
 	{
 		return this.http.get(this._dsUrl + '/form/get?licencia=' + productLicense + '&user_id=' + this._as.getToken())
+		.map( (response: any) => {
+			return response.json();
+		});
+	}
+
+	public getUserFiles ( ) : Observable<any>
+	{
+		let ds = 'http://ds.log'; // this._dsUrl
+		return this.http.get( ds + '/user/files?user_id=' + this._as.getToken())
 		.map( (response: any) => {
 			return response.json();
 		});

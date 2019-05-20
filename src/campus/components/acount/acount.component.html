@@ -48,7 +48,35 @@
         </button>
     </div>
 
+    <div style="background-color: aliceblue;">
+            {{_fileFormAction}}
+        
+        <!--form [formGroup]="_fileForm" action="http://ds.log/user/send/files" method="POST" id="formF">
+
+            <div class="form-group">
+                <label for="title">TITLE</label>
+                <input type="text" class="form-control" formControlName="title"/>
+            </div>
+
+            <div class="form-group">
+                <label for="title">FILE</label>
+                <input type="file" class="form-control" formControlName="file"/>
+            </div>
+            
+            <input type="submit" form="formF"/>
+
+        </form>
+
+        <button form="formF">Click me!</button-->
+
+            <mk-form (onEnter)="falseClick()" *ngIf="_ids" name="file" [checkerr]="_fieldError" [ids]="_ids"></mk-form>    
+            
+    </div>
+
     <terms-footer></terms-footer>
+
+    <!--iframe src="./mocks/js/index.html" style="border: 1px solid black; height: -webkit-fill-available; width: 100%"></iframe-->
+
 </div>
 
 <cam-response *ngIf="_sent" [title]="_response_obj.title" [text]="_response_obj.text" 

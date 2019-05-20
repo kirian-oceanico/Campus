@@ -16,7 +16,8 @@ import { User } from '../../models/user.model';
 
 import { Loader } from 'mk';
 import { Router } from '@angular/router';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
+
 
 @Component({
 	templateUrl: './acount.component.html',
@@ -47,6 +48,8 @@ export class AcountComponent
 
 	private _user : any;
 
+	private _user_files: any;
+
 	private currentUser : Object;
 
 	private accountDetails : Object;
@@ -58,6 +61,10 @@ export class AcountComponent
 	private _fieldError: boolean;
 
 	private _terms_and_conditions: string;
+
+	private _fileForm: FormGroup;
+	private _fileFormAction: string;
+
 
 	public constructor ( 
 		private logger: Logger, 
@@ -101,6 +108,17 @@ export class AcountComponent
 		this._fieldError = false;
 
 		this._terms_and_conditions = new Array(environment.pathCampus,environment.pathTermsAndConditions).join('/');
+		
+		this._user_files = [];
+
+
+
+		this._fileForm = new FormGroup({
+			title: new FormControl(''),
+			file: new FormControl(''),
+		});
+
+		this._fileFormAction = 'http://ds.log/user/send/files';
 	}
 
 	public ngOnInit () : void
@@ -111,8 +129,23 @@ export class AcountComponent
 
 		this._loader.show('acount');
 
-		this._subscriptions = [ this.subscribeUserCurrentDetails(), this.subscribeUserForm(obs) ];
+		this._subscriptions = [ this.subscribeUserCurrentDetails(), this.subscribeUserForm(obs), this.subscribeUserCurrentFiles() ];
 
+	}
+
+	private sendFile ()
+	{
+		debugger
+		console.log(this._fileForm.value);
+	}
+
+	private subscribeUserCurrentFiles () : Subscription
+	{
+		return this._us.getUserFiles()
+		.subscribe( (files:any) => {
+			console.log(files);debugger;
+			this._user_files = files;
+		});
 	}
 
 	private subscribeUserCurrentDetails () : Subscription
@@ -322,7 +355,8 @@ export class AcountComponent
         );
 	}
 
-	private falseClick() {
+	private falseClick() 
+	{
         let clickableButton = this._button.nativeElement;
 
         clickableButton.click();
