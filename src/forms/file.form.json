@@ -1,0 +1,19 @@
+[	
+	{
+	    "key": "file_title",
+	    "label": "Título",
+	    "value": "",
+	    "required": true,
+	    "order": 1,
+	    "maxlength": "80",
+	    "type": "text"
+    },
+    {
+	    "key": "file_file",
+	    "label": "Archivo",
+	    "value": "",
+	    "required": true,
+	    "order": 2,
+	    "type": "file"
+    }
+]

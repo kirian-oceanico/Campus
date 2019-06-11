@@ -3,10 +3,10 @@
 :host ::ng-deep {
   .container-left {
   	background-image: none;
-  	height: 180px;
+  	//height: 180px;
   	@media all and (min-width: 48em) {
   	  height: 100vh;
-  	}
+		}
   }  
   section {
   	-webkit-transition: background-color 300ms ease-in;
@@ -41,7 +41,8 @@
   .container-left-heading {
   	display: inline;
   	margin: 0px;  
-  	.navigation__menu {
+		.navigation__menu 
+		{
 	  	display: flex;
 	  	flex-direction: row-reverse;
   	  justify-content: space-between;
@@ -62,7 +63,12 @@
 				.avatar {
   		    margin: 0px auto;
   		  }
-  		}
+			}
+			
+			@media (max-width: 400px)
+			{
+				margin: 15px 0px 15px;
+			}
   	}  
   	.navigation__sites {
   	  display: flex;
@@ -98,35 +104,39 @@
 	  	padding-top: 1vh;
 	  	@media all and (min-width: 48em) {
 	  	  width: 25%; 
+			}
+			
+			@media all and (max-width: 400px) {
+	  	  padding-top: 0; 
 	  	}
   	}
   }
 
   .container_right__cuenta {
-		margin-top: 70vh;
+		// margin-top: 70vh;
 		@media all and (min-height: 480px) {
-		  margin-top: 55vh;
+		  // margin-top: 55vh;
 		}
 		@media all and (min-height: 600px) {
-		  margin-top: 45vh;
+		  //margin-top: 45vh;
 		}
   }
   .container_right__cursos {
-		margin-top: 49vh;
+		// margin-top: 49vh;
 		@media all and (min-height: 500px) {
-		  margin-top: 30vh;
+		  // margin-top: 30vh;
 		}
 		@media all and (min-height: 600px) {
-		  margin-top: 25vh;
+		  // margin-top: 25vh;
 		}
   }
   .container_right__certificados {
-		margin-top: 37vh;
+		//margin-top: 37vh;
 		@media all and (min-height: 500px) {
-		  margin-top: 30vh;
+		  //margin-top: 30vh;
 		}
 		@media all and (min-height: 600px) {
-		  margin-top: 25vh;
+		  //margin-top: 25vh;
 		}
 	}
 	

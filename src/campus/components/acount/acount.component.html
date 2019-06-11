@@ -1,15 +1,17 @@
-<div class="account">
+<div class="account" style="padding: 0px; width: 100%;">
+    
     <user-avatar *ngIf="_currentWindowWidth < 768"></user-avatar>
-    <h1 *ngIf="_currentWindowWidth >= 768">MI CUENTA</h1>
+    
+    <h1 *ngIf="_currentWindowWidth >= 768" class="centering">MI CUENTA</h1>
 
-    <div class="forms_container">
+    <div class="forms_container centering">
         <mk-form (onEnter)="falseClick()" *ngIf="_ids" name="user" [checkerr]="_fieldError" [only]="_onl1" [ids]="_ids"></mk-form>
         <mk-form (onEnter)="falseClick()" *ngIf="_ids" name="user" [checkerr]="_fieldError" [only]="_onl3" [ids]="_ids"></mk-form>
         <mk-form (onEnter)="falseClick()" *ngIf="_ids" name="user" [checkerr]="_fieldError" cols="2" [only]="_onl2" [ids]="_ids"></mk-form>        
     </div>
 
 
-    <div class="intereses">
+    <div class="intereses centering">
         <p class="intereses__header">Especializaciones de interés</p>
 
         <div class="intereses__field">
@@ -26,30 +28,133 @@
                 </span>
             </p>
         </div>
+        
+        <div class="dialog-button">
+            <span (click)="openFirstDialog()">ACTUALIZAR</span>
+        </div>
+
+        <div class="submit">
+            <button class="submit__button" #button (onClicked)="send()" (onChecking)="showError()"
+                    [disabled]="inactive" mkStepvalidate [form]="_form_group">
+                ACEPTAR
+            </button>
+        </div>
+
     </div>
 
-    <div class="dialog-button">
-        <p (click)="openFirstDialog()">ACTUALIZAR</p>
+
+    <div style="background-color: aliceblue; padding: 20px;">
+        
+        <!--form [formGroup]="_fileForm" action="http://ds.log/user/send/files" method="POST" id="formF">
+
+            <div class="form-group">
+                <label for="title">TITLE</label>
+                <input type="text" class="form-control" formControlName="title"/>
+            </div>
+
+            <div class="form-group">
+                <label for="title">FILE</label>
+                <input type="file" class="form-control" formControlName="file"/>
+            </div>
+            
+            <input type="submit" form="formF"/>
+
+        </form>
+
+        <button form="formF">Click me!</button-->
+        <div class="centering">
+
+                <h1 *ngIf="_currentWindowWidth >= 768" style="margin-top:10px !important;">MI DOCUMENTACION</h1>
+
+                <p>
+                    Adjunte aquí la documentación necesaria para tramitar su certificación.
+                    Archivos en (JPG - PDF - DOC). Introduzca el nombre del archivo siguiendo las indicaciones de su tutor.
+                </p>
+
+                <ul>
+                    <li *ngFor="let file of _user_files">
+                        <a href="{{file.url}}" target="_blank">{{file.title}}</a>
+                        <span class="delete" (click)="deleteFile(file.id)">x</span>
+                    </li>
+                </ul>
+
+
+                <div style="width: 100%; display:block;">
+                
+                    <label style="width: 50px; float: left; margin-right: 15px; margin-bottom: 0px;">Título: </label>
+                    <div class="form-group ng-star-inserted" style="width: calc(100% - 65px); float: right;">
+                        <input  class="form-control" 
+                                placeholder="" 
+                                type="text" 
+                                #input_file_name 
+                                (change)="fileNameChange()"
+                                class="form-control input-file" 
+                                style=" background-color: aliceblue; 
+                                        width: 100%;    
+                                        height: 30px; 
+                                        font-size: 2rem;">
+                    </div>
+                
+                </div>
+
+                <button class="dialog-upload-file-button submit__button" #button_file (click)="selectFile()">
+                    <span>SELECIONE ARCHIVO</span>
+                </button>
+
+                <button id="send_file" [disabled]="file_disabled" class="dialog-upload-file-button submit__button" 
+                            #button_file 
+                            (click)="sendFile()"
+                            style=" float: right;
+                                    width: auto;
+                                    min-width: 0px;">
+                    <span>ENVIAR</span>
+                </button>
+
+
+                <div class="form-group ng-star-inserted" style="width: 100%; display:none;">
+                    <label>Archivo</label>
+                    <input type="file" #input_file class="form-control input-file"/>
+                </div>
+
+            
+            
+                
+            </div>
     </div>
 
-    <div class="password-button">
-        <img src="{{_key}}"/>
-        <a routerLink="/campus/{{_pass_change}}" 
-            routerLinkActive="active"
-            class="password-button__text">
-            Cambiar contraseña
-        </a>
-    </div>
+    <h1 *ngIf="_currentWindowWidth >= 768" class="centering">MI CONTRASEÑA</h1>
+    
+    <div class="password-button centering">
+        
+        <p>
+            Gestione o modifique su contraseña desde aquí
+        </p>
 
-    <div class="submit">
-        <button class="submit__button" #button (onClicked)="send()" (onChecking)="showError()"
-                [disabled]="inactive" mkStepvalidate [form]="_form_group">
-            ACEPTAR
-        </button>
+        <div class="pass">
+            
+            <div>
+                <img src="{{_key}}"/>
+            </div>
+
+            <div>
+                <button class="dialog-upload-file-button  submit__button">
+                    <span>
+                        <a routerLink="/campus/{{_pass_change}}" routerLinkActive="active">CAMBIAR CONTRASEÑA</a>
+                    </span>
+                </button>
+                
+            </div>
+
+        </div>
     </div>
 
     <terms-footer></terms-footer>
+
+    <!--iframe src="./mocks/js/index.html" style="border: 1px solid black; height: -webkit-fill-available; width: 100%"></iframe-->
+
 </div>
+
+
 
 <cam-response *ngIf="_sent" [title]="_response_obj.title" [text]="_response_obj.text" 
               [btn]="_response_obj.btn" [img]="_response_obj.img" 

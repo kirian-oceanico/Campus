@@ -4,11 +4,13 @@ import { Observable }                                   from "rxjs/Observable"
 export class PrivacyService {
     privacyUrl = '/privacidad/politica_'
 
-    public constructor( private http : HttpClient ) {
+    public constructor( private http : HttpClient ) 
+    {
 
     }
 
-    public getPrivacyTerms (str) : Observable<any> {
+    public getPrivacyTerms (str) : Observable<any> 
+    {
         return this.http.get(this.privacyUrl + str + '.json');
     }
 }

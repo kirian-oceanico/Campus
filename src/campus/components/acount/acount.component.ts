@@ -16,7 +16,10 @@ import { User } from '../../models/user.model';
 
 import { Loader } from 'mk';
 import { Router } from '@angular/router';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
+import { switchMap } from 'rxjs/operators';
+
+import { Response, Http, ResponseOptions } 								from "@angular/http";
 
 @Component({
 	templateUrl: './acount.component.html',
@@ -24,6 +27,10 @@ import { FormGroup } from '@angular/forms';
 })
 export class AcountComponent
 {
+	@ViewChild('input_file') private inputFile:ElementRef;
+	@ViewChild('input_file_name') private inputFileName:ElementRef;
+
+
 	@ViewChild('button') private _button: ElementRef;
 	@HostListener('window : resize') onresize() {
 		this._currentWindowWidth = window.innerWidth;
@@ -47,6 +54,8 @@ export class AcountComponent
 
 	private _user : any;
 
+	private _user_files: any;
+
 	private currentUser : Object;
 
 	private accountDetails : Object;
@@ -59,6 +68,12 @@ export class AcountComponent
 
 	private _terms_and_conditions: string;
 
+	private _input_file: any;
+	private _input_file_name: any;
+	private _file: any;
+
+    private file_disabled: boolean;
+
 	public constructor ( 
 		private logger: Logger, 
 		private _fs: MkFormService, 
@@ -68,7 +83,7 @@ export class AcountComponent
 		private _us: UserService,
 		private _loader: Loader,
 		private _router: Router,
-		private _renderer: Renderer2 ) 
+        private _renderer: Renderer2) 
 	{ 
 		logger.log('ACOUNT COMPONENT'); 
 
@@ -96,11 +111,15 @@ export class AcountComponent
 			'user_details_college' : ''
 		}
 
-		this.inactive = true;
+		
 
 		this._fieldError = false;
 
 		this._terms_and_conditions = new Array(environment.pathCampus,environment.pathTermsAndConditions).join('/');
+		
+        this._user_files = [];
+        
+        this.file_disabled = true;
 	}
 
 	public ngOnInit () : void
@@ -111,9 +130,99 @@ export class AcountComponent
 
 		this._loader.show('acount');
 
-		this._subscriptions = [ this.subscribeUserCurrentDetails(), this.subscribeUserForm(obs) ];
+		this._input_file = this.inputFile.nativeElement;
+		this._input_file_name = this.inputFileName.nativeElement;
 
+		this._subscriptions = [ 
+			this.subscribeUserCurrentDetails(), 
+			this.subscribeUserForm(obs), 
+			this.subscribeUserCurrentFiles() ,
+			this.subscribeFileInput()
+		];
+
+        this._us.refreshFilesNeded$
+        .subscribe(()=>{
+            
+            this.subF();
+        });
+    }
+
+    private fileNameChange ()
+    {
+        debugger
+        let v = this._input_file_name.value;
+
+        if ( v.trim().length > 0 && this._file )
+        {
+            this.file_disabled = false;
+        }
+        else
+        {
+            this.file_disabled = true;
+        }
+    }
+
+    private sendFile ()
+	{
+        if ( this._file )
+        {
+            let v = this._input_file_name.value;
+
+            this._us.saveFile(v, this._file)
+            .subscribe( (resp:any) => {
+                this._input_file_name.value = '';
+                
+                let infi = this._input_file;
+                let wrapper = document.createElement('form');
+                let parent = infi.parentNode;
+
+                parent.insertBefore(wrapper, infi);
+                wrapper.appendChild(infi);
+                wrapper.reset();
+
+                while (wrapper.firstChild) parent.insertBefore(wrapper.firstChild, wrapper);
+
+                parent.removeChild(wrapper);
+
+                this._file = null;
+
+                this.file_disabled = true;
+            });
+        }
 	}
+    
+    private selectFile ()
+    {
+        this._input_file.click();
+    }
+
+    private deleteFile ( id )
+    {   
+        this._us.deleteFile( id )
+        .subscribe( (resp:any) => {
+            
+        });
+    }
+
+	private subscribeUserCurrentFiles () : Subscription
+	{
+		return this._us.getUserFiles()
+		.subscribe( (files:any) => {
+			console.log(files);
+
+			this._user_files = files.data;
+		});
+	}
+
+    private subF () { 
+        
+        this._us.getUserFiles()
+		.subscribe( (files:any) => {
+			console.log(files);
+            
+			this._user_files = files.data;
+        }); 
+    }
 
 	private subscribeUserCurrentDetails () : Subscription
 	{
@@ -141,10 +250,51 @@ export class AcountComponent
 	public ngOnDestroy () : void 
     { 
         this._subscriptions.forEach( sub => sub.unsubscribe() );
+		//this.fileUpload = fileName;
         this._subscriptions.length = 0;
 		this._loader.dismiss('acount'); 
+    }
+    
+	private subscribeFileInput ()
+	{
+		return Observable.fromEvent(this._input_file, 'change')
+        .subscribe( (x:Event) => {
+			const reader = new FileReader();
+			let tar:any = x.target;
+
+            if(tar.files && tar.files.length) 
+            {
+                let f = tar.files[0];
+                let fileName = f.name;
+
+                const [file] = tar.files;
+                reader.readAsDataURL(file);
+            
+                reader.onload = () => {
+                    /*this._form_group.patchValue({
+                        file: reader.result
+                    });*/
+				
+				
+                    this._file = reader.result;
+                    
+                    let v = this._input_file_name.value;
+
+                    if ( v.trim().length > 0 && this._file )
+                    {
+                        this.file_disabled = false;
+                    }
+                    else
+                    {
+                        this.file_disabled = true;
+                    }
+                    // need to run CD since file load runs outside of zone
+                    //this.cd.markForCheck();
+                };
+            }
+		});
 	}
-	
+
     private subscribeUserForm ( observable: Observable<any> ) : Subscription
     {
     	return observable
@@ -225,7 +375,7 @@ export class AcountComponent
 			viewContainerRef: this._vcr,
 			disableClose: true,
       		data: { 
-				ids: this._ids, 
+				ids: this._ids,
 				ref: this._vcr
 			}
 		})
@@ -260,7 +410,8 @@ export class AcountComponent
 
 	private send () : void {
 		this._loader.show('updating');
-		let aux = this._form_group.getRawValue();
+        
+        let aux = this._form_group.getRawValue();
             
 		let data = {
 			'first_name': aux.oauth_user_first_name,
@@ -322,7 +473,8 @@ export class AcountComponent
         );
 	}
 
-	private falseClick() {
+	private falseClick() 
+	{
         let clickableButton = this._button.nativeElement;
 
         clickableButton.click();

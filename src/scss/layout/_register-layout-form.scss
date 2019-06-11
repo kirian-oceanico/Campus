@@ -5,7 +5,7 @@
 .form-group {
   border-radius: 0;
   border-bottom: .1rem solid #8e8e8e;
-  width: 42rem;
+  //width: 42rem;
 }
 
 .form-control {
@@ -60,7 +60,7 @@ label {
   }
 
   .form-group {
-    max-width: 32rem;
+    //max-width: 32rem;
   }
 }
 
@@ -68,7 +68,7 @@ label {
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 767.98px) and (max-width: 1199.98px) {
   .form-group {
-    max-width: 38rem;
+    //max-width: 38rem;
   }
 }
 

@@ -1,0 +1,101 @@
+::ng-deep #cdk-overlay-0 {
+    max-width: 100vw !important;
+  }
+  
+  .wrapper {
+    background-color: white;
+    box-shadow:  6px 6px 12px rgba(0,0,0,.5);
+  }
+  
+  .close_dialog__confirm {
+    margin: 0px 20px;
+    padding: 25px;
+    font-size: 1.75rem;
+  
+    .close_dialog__confirm__opt {
+      display: flex;
+      justify-content: space-around;
+      padding-top: 2vh;
+      font-size: 2rem;
+      font-weight: 450;
+  
+      p {
+        cursor: pointer;
+      }
+  
+      p:hover {
+        color: #53b0ed;
+      }
+    }
+  }
+  
+  .dialog {
+    display: flex;
+    flex-direction: column;
+  
+    .dialog__close {
+      display: flex;
+      flex-direction: row-reverse;
+      padding: 10px;
+      cursor: pointer;
+    }
+  
+    .dialog__form {
+      margin-left: auto;
+      margin-right: auto;
+      display: flex;
+      justify-content: space-around;
+      flex-direction: row-reverse;
+          
+      .dialog__form__select {
+        margin: 3vh 3vw;
+        @media all and (min-width: 48em) {
+          margin: auto 25px;
+        }
+        ::ng-deep .heading-para {
+          margin-bottom: 3rem;
+        }
+        ::ng-deep .list-group {
+          max-height: 30vh;
+        }
+      }
+    }
+  
+    .dialog__button {
+      display: flex;
+      justify-content: center;
+      padding: 1vmax;
+      margin: 2vh auto;
+      width: 40vw;
+        font-size: calc(1.2vw + 1.2vh + 0.6vmin);
+      font-weight: 500;
+      background-color: rgb(53, 206, 99);
+      color: white;
+      border-radius: 30px;
+      cursor: pointer;
+        @media all and (min-width: 48em) {
+          width: 15vw;
+          font-size: calc(.6vw + .6vh + .3vmin);
+        }
+    }
+  }
+  
+  .dialog_hide {
+    display: none;
+  }
+  
+  .submit__mes {
+    padding: 20px;
+  }
+  
+  :host ::ng-deep {
+    .heading-para {
+      margin-top: 0;
+    }
+  }
+  
+  ::ng-deep .mat-dialog-container {
+    background-color: transparent;
+    box-shadow: none; 
+  }
+  

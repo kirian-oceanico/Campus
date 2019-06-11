@@ -6,9 +6,9 @@
 //exp//ort const environment = {
 //  production: false,
 //  domain: 'http://localhost:4200',
-//  apiUrl: 'http://api-test.oceano.com',
-//  dsUrl: 'http://ds-test.oceano.com',
-//  ssoLoginUrl: 'http://sso-test.oceano.com/sso/login',
+//  apiUrl: 'http://api-dev.oceano.com',
+//  dsUrl: 'http://ds-dev.oceano.com',
+//  ssoLoginUrl: 'http://sso-dev.oceano.com/sso/login',
 //  pathPublic: 'public',
 //  pathLogin: 'login',
 //  pathRegistro: 'registro',
@@ -19,8 +19,8 @@ export const environment = {
   production: false,
   
   domain: 'http://localhost:4200',
-  apiUrl: 'http://api-test.oceano.com',
-  dsUrl: 'http://ds-test.oceano.com',
+  apiUrl: 'http://api-dev.oceano.com',
+  dsUrl: 'http://ds-dev.oceano.com',
   ssoUrl: 'https://sso.oceano.com',
   suiteUrl: 'http://suite.oceano.com',
   
@@ -37,7 +37,7 @@ export const environment = {
   pathCertificateRequest: 'pedir-certificacion',
   pathPasswordChange: 'cambiar-contrasena',
 
-  ssoLoginUrl: 'http://sso-test.oceano.com/sso/login',
+  ssoLoginUrl: 'http://sso-dev.oceano.com/sso/login',
   ssoRedirectUrl: 'https://sso.oceano.com/sso/redirect?licencia_id=',
 
   apiPasswordChange: '/api/user/change_password/',
@@ -45,7 +45,7 @@ export const environment = {
   recoveryMail: '/api/user/forgot_password',
   
   newPassword: '/api/user/forgot_password/change',
-  getConsumerProducts: 'http://ds-test.oceano.com/api/product/stamp_user?stamp_id=4&user_id=',
+  getConsumerProducts: 'http://ds-dev.oceano.com/api/product/stamp_user?stamp_id=4&user_id=',
   // getConsumerProducts: './mocks/list-products.json',
 
   icon_key: '/assets/img/icon-key.png'

@@ -1,6 +1,6 @@
 import { Inject, Injectable, Optional }					from '@angular/core';
 import { Response, Http, ResponseOptions } 								from "@angular/http";
-import { Observable, BehaviorSubject } 					from "rxjs/Rx"; 
+import { Observable, BehaviorSubject, Subject } 					from "rxjs/Rx";
 
 import { environment }									from '../../environments/environment';
 
@@ -13,32 +13,40 @@ import { Loader }										from 'mk';
 import { User, UserInterface }				    		from '../models/user.model';
 
 import { AuthService } from '../../shared/services/auth.service';
+import { switchMap } from 'rxjs/operator/switchMap';
+import { tap } from 'rxjs/operators';
 
 export class UserService extends DataService<User>
 {
-
 	private _dsUrl: string = environment.dsUrl;
 	private _apiUrl: string = environment.apiUrl;
 
-	public constructor ( 
-		private http: Http, 
-		private loader: Loader, 
+    private _refreshFilesNeded$ = new Subject<void>();
+
+	public constructor (
+		private http: Http,
+		private loader: Loader,
 		private logger: Logger,
 		private _as: AuthService )
 	{
 		super(User, logger, loader);
 	}
 
+    public get refreshFilesNeded$ ()
+    {
+        return this._refreshFilesNeded$;
+    }
+
 	public get users () : BehaviorSubject<Array<User>>
 	{
 		return this.subject;
 	}
 
-	public getById ( id: number|string ) : Observable<Response> 
-	{	
+	public getById ( id: number|string ) : Observable<Response>
+	{
 		return this.http.get(this._dsUrl + '/api/user/' + id)
-		.map( (data:any) => 
-		{ 
+		.map( (data:any) =>
+		{
 			let res: Response;
 			let opt: ResponseOptions;
 			let bod: any = data.json();
@@ -55,7 +63,7 @@ export class UserService extends DataService<User>
 				url: data.url
 			}));
 
-			return res; 
+			return res;
 		});
 	};
 
@@ -70,7 +78,7 @@ export class UserService extends DataService<User>
 		.map( (response:any) => {
 			return response.json()
 		});
-	} 
+	}
 
 	public saveAvatar ( img: string ) : Observable<any>
 	{
@@ -78,7 +86,7 @@ export class UserService extends DataService<User>
 		return this.http.post(this._dsUrl + '/api/user/avatar', data);
 	}
 
-	public getUserData ( productLicense : string ) : Observable<any> 
+	public getUserData ( productLicense : string ) : Observable<any>
 	{
 		return this.http.get(this._dsUrl + '/form/get?licencia=' + productLicense + '&user_id=' + this._as.getToken())
 		.map( (response: any) => {
@@ -86,7 +94,45 @@ export class UserService extends DataService<User>
 		});
 	}
 
-	public updateBeforeCourse ( data: {[key:string]:any}, route: string, productLicense : string ) : Observable<any> 
+	public getUserFiles ( ) : Observable<any>
+	{
+		this.loader.show('files');
+		let ds = 'http://ds.log'; // this._dsUrl
+		return this.http.get( ds + '/user/files?user_id=' + this._as.getToken())
+		.map( (response: any) => {
+			this.loader.dismiss('files');
+			return response.json();
+		});
+	}
+
+	public saveFile (title: string, file: any) : Observable<any>
+	{
+        this.loader.show('file');
+
+		let ds = 'http://ds.log'; // this._dsUrl
+		let obj = {
+			'user_id': this._as.getToken(),
+			'title': title,
+			'file': file
+		};
+		return this.http.post(ds+'/user/send/files', obj)
+        .map( (response: any) => {
+            this.loader.dismiss('file'); 
+            return response.json();
+        })
+        .pipe( tap( () =>  this._refreshFilesNeded$.next() ) );
+    }
+    
+    public deleteFile ( id: any )
+    {
+        let ds = 'http://ds.log';
+
+        return this.http.delete( ds + '/user/files/' + id)
+        .map( (response: any) => response.json() )
+        .pipe( tap( () =>  this._refreshFilesNeded$.next() ) );
+    }
+
+	public updateBeforeCourse ( data: {[key:string]:any}, route: string, productLicense : string ) : Observable<any>
 	{
 		data.user_id = this._as.getToken();
 		data.licencia = productLicense;
