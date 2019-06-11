@@ -30,6 +30,7 @@ export class AcountComponent
 	@ViewChild('input_file') private inputFile:ElementRef;
 	@ViewChild('input_file_name') private inputFileName:ElementRef;
 
+
 	@ViewChild('button') private _button: ElementRef;
 	@HostListener('window : resize') onresize() {
 		this._currentWindowWidth = window.innerWidth;
@@ -110,7 +111,7 @@ export class AcountComponent
 			'user_details_college' : ''
 		}
 
-		this.inactive = true;
+		
 
 		this._fieldError = false;
 
@@ -163,12 +164,31 @@ export class AcountComponent
 
     private sendFile ()
 	{
-        let v = this._input_file_name.value;
+        if ( this._file )
+        {
+            let v = this._input_file_name.value;
 
-		this._us.saveFile(v, this._file)
-		.subscribe( (resp:any) => {
-            
-		});
+            this._us.saveFile(v, this._file)
+            .subscribe( (resp:any) => {
+                this._input_file_name.value = '';
+                
+                let infi = this._input_file;
+                let wrapper = document.createElement('form');
+                let parent = infi.parentNode;
+
+                parent.insertBefore(wrapper, infi);
+                wrapper.appendChild(infi);
+                wrapper.reset();
+
+                while (wrapper.firstChild) parent.insertBefore(wrapper.firstChild, wrapper);
+
+                parent.removeChild(wrapper);
+
+                this._file = null;
+
+                this.file_disabled = true;
+            });
+        }
 	}
     
     private selectFile ()
@@ -390,7 +410,8 @@ export class AcountComponent
 
 	private send () : void {
 		this._loader.show('updating');
-		let aux = this._form_group.getRawValue();
+        
+        let aux = this._form_group.getRawValue();
             
 		let data = {
 			'first_name': aux.oauth_user_first_name,

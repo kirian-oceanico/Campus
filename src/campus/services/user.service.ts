@@ -96,17 +96,19 @@ export class UserService extends DataService<User>
 
 	public getUserFiles ( ) : Observable<any>
 	{
-		debugger
+		this.loader.show('files');
 		let ds = 'http://ds.log'; // this._dsUrl
 		return this.http.get( ds + '/user/files?user_id=' + this._as.getToken())
 		.map( (response: any) => {
-			debugger
+			this.loader.dismiss('files');
 			return response.json();
 		});
 	}
 
 	public saveFile (title: string, file: any) : Observable<any>
 	{
+        this.loader.show('file');
+
 		let ds = 'http://ds.log'; // this._dsUrl
 		let obj = {
 			'user_id': this._as.getToken(),
@@ -115,7 +117,8 @@ export class UserService extends DataService<User>
 		};
 		return this.http.post(ds+'/user/send/files', obj)
         .map( (response: any) => {
-		 	return response.json();
+            this.loader.dismiss('file'); 
+            return response.json();
         })
         .pipe( tap( () =>  this._refreshFilesNeded$.next() ) );
     }
