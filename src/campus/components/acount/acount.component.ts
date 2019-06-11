@@ -17,7 +17,9 @@ import { User } from '../../models/user.model';
 import { Loader } from 'mk';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
+import { switchMap } from 'rxjs/operators';
 
+import { Response, Http, ResponseOptions } 								from "@angular/http";
 
 @Component({
 	templateUrl: './acount.component.html',
@@ -25,6 +27,9 @@ import { FormGroup, FormControl } from '@angular/forms';
 })
 export class AcountComponent
 {
+	@ViewChild('input_file') private inputFile:ElementRef;
+	@ViewChild('input_file_name') private inputFileName:ElementRef;
+
 	@ViewChild('button') private _button: ElementRef;
 	@HostListener('window : resize') onresize() {
 		this._currentWindowWidth = window.innerWidth;
@@ -62,9 +67,11 @@ export class AcountComponent
 
 	private _terms_and_conditions: string;
 
-	private _fileForm: FormGroup;
-	private _fileFormAction: string;
+	private _input_file: any;
+	private _input_file_name: any;
+	private _file: any;
 
+    private file_disabled: boolean;
 
 	public constructor ( 
 		private logger: Logger, 
@@ -75,7 +82,7 @@ export class AcountComponent
 		private _us: UserService,
 		private _loader: Loader,
 		private _router: Router,
-		private _renderer: Renderer2 ) 
+        private _renderer: Renderer2) 
 	{ 
 		logger.log('ACOUNT COMPONENT'); 
 
@@ -109,16 +116,9 @@ export class AcountComponent
 
 		this._terms_and_conditions = new Array(environment.pathCampus,environment.pathTermsAndConditions).join('/');
 		
-		this._user_files = [];
-
-
-
-		this._fileForm = new FormGroup({
-			title: new FormControl(''),
-			file: new FormControl(''),
-		});
-
-		this._fileFormAction = 'http://ds.log/user/send/files';
+        this._user_files = [];
+        
+        this.file_disabled = true;
 	}
 
 	public ngOnInit () : void
@@ -129,24 +129,80 @@ export class AcountComponent
 
 		this._loader.show('acount');
 
-		this._subscriptions = [ this.subscribeUserCurrentDetails(), this.subscribeUserForm(obs), this.subscribeUserCurrentFiles() ];
+		this._input_file = this.inputFile.nativeElement;
+		this._input_file_name = this.inputFileName.nativeElement;
 
-	}
+		this._subscriptions = [ 
+			this.subscribeUserCurrentDetails(), 
+			this.subscribeUserForm(obs), 
+			this.subscribeUserCurrentFiles() ,
+			this.subscribeFileInput()
+		];
 
-	private sendFile ()
+        this._us.refreshFilesNeded$
+        .subscribe(()=>{
+            
+            this.subF();
+        });
+    }
+
+    private fileNameChange ()
+    {
+        debugger
+        let v = this._input_file_name.value;
+
+        if ( v.trim().length > 0 && this._file )
+        {
+            this.file_disabled = false;
+        }
+        else
+        {
+            this.file_disabled = true;
+        }
+    }
+
+    private sendFile ()
 	{
-		debugger
-		console.log(this._fileForm.value);
+        let v = this._input_file_name.value;
+
+		this._us.saveFile(v, this._file)
+		.subscribe( (resp:any) => {
+            
+		});
 	}
+    
+    private selectFile ()
+    {
+        this._input_file.click();
+    }
+
+    private deleteFile ( id )
+    {   
+        this._us.deleteFile( id )
+        .subscribe( (resp:any) => {
+            
+        });
+    }
 
 	private subscribeUserCurrentFiles () : Subscription
 	{
 		return this._us.getUserFiles()
 		.subscribe( (files:any) => {
-			console.log(files);debugger;
-			this._user_files = files;
+			console.log(files);
+
+			this._user_files = files.data;
 		});
 	}
+
+    private subF () { 
+        
+        this._us.getUserFiles()
+		.subscribe( (files:any) => {
+			console.log(files);
+            
+			this._user_files = files.data;
+        }); 
+    }
 
 	private subscribeUserCurrentDetails () : Subscription
 	{
@@ -174,10 +230,51 @@ export class AcountComponent
 	public ngOnDestroy () : void 
     { 
         this._subscriptions.forEach( sub => sub.unsubscribe() );
+		//this.fileUpload = fileName;
         this._subscriptions.length = 0;
 		this._loader.dismiss('acount'); 
+    }
+    
+	private subscribeFileInput ()
+	{
+		return Observable.fromEvent(this._input_file, 'change')
+        .subscribe( (x:Event) => {
+			const reader = new FileReader();
+			let tar:any = x.target;
+
+            if(tar.files && tar.files.length) 
+            {
+                let f = tar.files[0];
+                let fileName = f.name;
+
+                const [file] = tar.files;
+                reader.readAsDataURL(file);
+            
+                reader.onload = () => {
+                    /*this._form_group.patchValue({
+                        file: reader.result
+                    });*/
+				
+				
+                    this._file = reader.result;
+                    
+                    let v = this._input_file_name.value;
+
+                    if ( v.trim().length > 0 && this._file )
+                    {
+                        this.file_disabled = false;
+                    }
+                    else
+                    {
+                        this.file_disabled = true;
+                    }
+                    // need to run CD since file load runs outside of zone
+                    //this.cd.markForCheck();
+                };
+            }
+		});
 	}
-	
+
     private subscribeUserForm ( observable: Observable<any> ) : Subscription
     {
     	return observable
@@ -258,7 +355,7 @@ export class AcountComponent
 			viewContainerRef: this._vcr,
 			disableClose: true,
       		data: { 
-				ids: this._ids, 
+				ids: this._ids,
 				ref: this._vcr
 			}
 		})

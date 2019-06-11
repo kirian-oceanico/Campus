@@ -1,59 +1,70 @@
 @import '~scss/abstracts/variables';
 
-.response {
-  position: absolute;
-  top: -300px;
-  bottom: 0px;
-  left: 0px;
-  right: 0px;
-  background-color: white;
-  margin-top: 0px;
-  height: 100vh;
+.response 
+{
+    position: fixed;
+    top: -300px;
+    bottom: 0px;
+    // left: 0px;
+    right: 0px;
+    background-color: white;
+    margin-top: 0px;
+    height: 100vh;
 
-  @media all and (min-width: 48em) {
-    top: 0px;
-  }
-
-  .inner-wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 75vh;
-    @media all and (min-width: 48em) {
-      height: 100vh;
+    @media all and (min-width: 48em) 
+    {
+        top: 0px;
     }
-  }
 
-  .response__img {
-	  margin-bottom: 2vmax;
-  }
+    .inner-wrapper 
+    {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 75vh;
+        @media all and (min-width: 48em) 
+        {
+            height: 100vh;
+        }
+    }
 
-  .response__title {
-	  color: black;
-	  font-size: 3vmin;
-	  margin-bottom: 2vmax;
-  }
+    .response__img 
+    {
+	    margin-bottom: 2vmax;
+    }
 
-  .response__msg {
-	  font-size: calc(1.3vw + 1.3vh + .6vmin);
-    margin-bottom: 2vh;
-    @media all and (min-width: 48em) {
-			font-size: calc(.7vw + .7vh + .3vmin);
-		}
-  }
+    .response__title 
+    {
+        color: black;
+        font-size: 3vmin;
+        margin-bottom: 2vmax;
+    }
 
-  .response__btn {
-	  width: fit-content;
-	  padding: 1vmax 3vmax;
-	  border-radius: 30px;
-	  border: transparent;
-		font-size: calc(1.5vw + 1.5vh + .7vmin);	  font-weight: 500;
-	  color: white;
-    background-color: $color-cuenta;
-    cursor: pointer;
-		@media all and (min-width: 48em) {
-			font-size: calc(.7vw + .7vh + .3vmin);
-		}
-  }
+    .response__msg 
+    {
+        font-size: calc(1.3vw + 1.3vh + .6vmin);
+        margin-bottom: 2vh;
+        @media all and (min-width: 48em) 
+        {
+            font-size: calc(.7vw + .7vh + .3vmin);
+        }
+    }
+
+    .response__btn 
+    {
+        width: fit-content;
+        padding: 1vmax 3vmax;
+        border-radius: 30px;
+        border: transparent;
+        font-size: calc(1.5vw + 1.5vh + .7vmin);	  
+        font-weight: 500;
+        color: white;
+        background-color: $color-cuenta;
+        cursor: pointer;
+        @media all and (min-width: 48em) 
+        {
+            font-size: calc(.7vw + .7vh + .3vmin);
+        }
+    }
 }

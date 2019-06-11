@@ -1,0 +1,36 @@
+<div class="wrapper" [hidden]="showMe">
+
+    <div class="close_dialog__confirm" *ngIf="confirmClose">
+        <p>Los datos no se actualizarán. ¿Continuar?</p>
+        <div class="close_dialog__confirm__opt">
+            <p (click)="closeDialog()">Si</p>
+            <p (click)="confirm()">No</p>            
+        </div>
+    </div>
+
+    <div class="dialog" *ngIf="showDialog"
+         [ngClass]="{ dialog_hide : this.confirmClose }">
+        
+        <div class="dialog__close" title="Cerrar">
+            <i class="material-icons" (click)="confirm()">
+                clear
+            </i>
+        </div>
+
+        <div class="dialog__form">
+            <div class="dialog__form__select">
+                <mk-form (onEnter)="falseClick()" name="jobs" [ids]="data.ids" [only]="_steps[_step]" [checkerr]="fieldError"></mk-form>
+            </div>
+        </div>
+        
+        <div #button class="dialog__button" mkStepvalidate [form]="_form_group" [filter]="_steps[_step]" 
+             _ngcontent-c3="" (onClicked)="next()" (onChecking)="checkError()">
+            ACEPTAR
+        </div>        
+    </div>
+
+    <div class="submit__mes" *ngIf="showText">
+        <h2>Un momento, por favor...</h2>
+    </div>
+</div>
+

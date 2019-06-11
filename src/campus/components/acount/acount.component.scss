@@ -1,106 +1,192 @@
 @import '~scss/abstracts/variables';
 
-:host ::ng-deep {
-  div[cols="col-6"]:first-child {
-	  width: 20%;
-  }
+:host ::ng-deep 
+{
+	div[cols="col-6"]:first-child 
+	{
+	    width: 20%;
+    }
 
-  div[cols="col-6"]:last-child {
+	div[cols="col-6"]:last-child 
+	{
 	  width: 78%;
 	}
 	
-	.account {
+	.account 
+	{
 		max-height: 140vh;
 		padding: 5vh 5vw;
-		@media all and (min-width: 48em) {
+        @media all and (min-width: 48em) 
+        {
 			max-height: 100vh;
-			overflow: auto;
+			// overflow: auto;
 		}
 	}
 
-  h1	{
+    h1
+    {
 		color: $color-cuenta;
 		font-size: calc(2vw + 2vh + 1vmin);
-		padding-bottom: 2vh;
-		@media all and (min-width: 48em) {
+        padding-bottom: 2vh;
+        margin-top: 30px !important;
+        @media all and (min-width: 48em) 
+        {
 			font-size: calc(1.1vw + 1.1vh + .7vmin);
 		}
 	}
 
-	.forms_container {
-		label {
+    .forms_container 
+    {
+        label 
+        {
 			font-size: 2vh;
 		}
-		input {
+        
+        input 
+        {
 			font-size: 3vh;
 		}
 
-		@media (min-width: 767.98px) and (max-width: 1199.98px) {
-			.mail-wrapper {
+        @media (min-width: 767.98px) and (max-width: 1199.98px) 
+        {
+            .mail-wrapper 
+            {
 				max-width: 54rem;
 			}		
 		}
 	}
 
-  .intereses__header {
-	  font-size: 2vh;
-	  font-weight: 300;
-  }
+	.intereses 
+	{
+		margin-bottom: 50px !important;
+	}
 
-  .intereses__field {
-	  border-bottom: 1px solid grey;
-	  .intereses__field__text {
-	    padding: 0.5vmin;
-		  font-size: 2.3vh;
-		  color: #515151;
-	  }
-  }
+    .intereses__header 
+    {
+        font-size: 2vh;
+        font-weight: 300;
+    }
 
-  .dialog-button {
-  	width: 100%;
-	  display: flex;
-	  justify-content: flex-start;
-	  color: $color-cuenta;
-	  font-weight: 500;
+    .intereses__field 
+    {
+        border-bottom: 1px solid grey;
+        .intereses__field__text 
+        {
+            padding: 0.5vmin;
+            font-size: 2.3vh;
+            color: #515151;
+        }
+    }
+
+	.dialog-button 
+	{
+  	    width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        color: $color-cuenta;
+        font-weight: 500;
 		padding-top: 10px;
-		@media all and (min-width: 48em) {
+        @media all and (min-width: 48em) 
+        {
 			justify-content: flex-end;
 		}
 
-	  p {
+        span 
+        {
+			font-size: 1em;
 			cursor: pointer;
 			font-size: calc(1.3vw + 1.3vh + .7vmin);
-			@media all and (min-width: 48em) {
+            @media all and (min-width: 48em) 
+            {
 				font-size: calc(.7vw + .7vh + .3vmin);
 			}
-	  }
-  }
+	    }
+    }
 
-  .password-button {
-		padding: 20px 0px 40px;
-
-		img {
-			padding-bottom: 1vh;
-		}
-
-	  .password-button__text {
-			font-size: calc(1.1vw + 1.1vh + .6vmin);
-	    padding-left: 11px;
-	    font-style: italic;
-			color: gray;
-			@media all and (min-width: 48em) {
-				font-size: calc(.6vw + .6vh + .3vmin);
+    button.dialog-button 
+	{
+        min-width: 200px;
+        background-color: $color-cuenta;
+        color: white;
+        font-weight: 500;
+        padding-top: 0px;
+        border: 0px;
+        border-radius: 7px;
+        min-height: 42px;
+        
+        span 
+        {
+            vertical-align: text-top;
+            font-size: 1em;
+			cursor: pointer;
+			font-size: calc(1.3vw + 1.3vh + .7vmin);
+            @media all and (min-width: 48em) 
+            {
+				font-size: calc(.7vw + .7vh + .3vmin);
 			}
-	  }
-  }
+	    }
+    }
 
-	.submit {
+    .pass 
+    {
+        display: grid;
+        grid-template-columns: 30px auto;
+        align-items: center;
+    }
+
+    .dialog-upload-file-button 
+	{
+        min-width: 200px;
+        background-color: #53b0ed;
+        color: white;
+        font-weight: 500;
+        padding-top: 0px;
+        border: 0px;
+        border-radius: 7px;
+        min-height: 35px;
+        padding: 0 15px;
+
+        span 
+        {
+            vertical-align: text-top;
+            font-size: 1em;
+			cursor: pointer;
+			font-size: calc(1.3vw + 1.3vh + .7vmin);
+            @media all and (min-width: 48em) 
+            {
+				font-size: calc(.5vw + .5vh + .3vmin);
+			}
+	    }
+    }
+
+    .password-button 
+    {
+            padding: 20px 0px 40px;
+
+
+        .password-button__text 
+        {
+            font-size: calc(1.1vw + 1.1vh + .6vmin);
+            padding-left: 11px;
+            font-style: italic;
+            color: gray;
+            @media all and (min-width: 48em) 
+            {
+                font-size: calc(.6vw + .6vh + .3vmin);
+            }
+        }
+    }
+
+    .submit 
+    {
 		padding: 0px 20vw;
-		@media all and (min-width: 48em) {
+        @media all and (min-width: 48em) 
+        {
 			padding: 0px;
 		}
 
-		.submit__button {
+        .submit__button 
+        {
 			padding: 1vh;
 			width: 35vw;
 			border-radius: 30px;
@@ -108,13 +194,15 @@
 			background-color: white;
 			color: #23B55E;
 			font-size: calc(1.5vw + 1.5vh + .7vmin);
-			@media all and (min-width: 48em) {
+            @media all and (min-width: 48em) 
+            {
 				width: 14vw;
 				font-size: calc(.7vw + .7vh + .3vmin);
 			}
 		}
 
-		.submit__button_active {
+        .submit__button_active 
+        {
 			background-color: #23B55E;
 			color: white;
 			cursor: pointer;
@@ -122,29 +210,95 @@
 	}
 }
 
-::ng-deep .custom-dialog {
-	.form-group li:last-child {
-	  border-bottom: none;
-	}
+::ng-deep .custom-dialog 
+{
+    .form-group li:last-child 
+    {
+        border-bottom: none;
+    }
 
-	.form-group li:first-child {
-	  border-top: none;
-	}
-	
-	.form-group {
-	  border-top: none;
-	  border-bottom: none;
-	}
+    .form-group li:first-child 
+    {
+        border-top: none;
+    }
+
+    .form-group 
+    {
+        border-top: none;
+        border-bottom: none;
+    }
 }
 
-.watermark {
+.watermark 
+{
 	text-align: end;
 	padding: 5vh 0;
 	color: #BBB;
-	p {
+    
+    p 
+    {
 		margin: 0;
 	}
-	.terms-link:hover {
+    
+    .terms-link:hover 
+    {
 		text-decoration: underline;
 	}
+}
+
+.centering 
+{
+	width: 95%;
+	max-width: 800px;
+	margin: 0px auto;
+}
+
+:host 
+{
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+p
+{
+	color: #515151;
+    font-size: 2.1vh;
+}
+
+ul
+{
+    color: #515151;
+    font-size: 2.1vh;
+    list-style: none;
+    padding: 0px;
+    margin-bottom: 20px;
+    
+    li
+    {
+        border-bottom-color: rgb(142, 142, 142);
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+        border-bottom-style: solid;
+        border-bottom-width: 1px;
+        color: #53b0ed;
+        line-height: 4.2vh;
+
+        span.delete 
+        {
+            float: right;
+            cursor: pointer;
+        }
+    }
+}
+
+#send_file:disabled
+{
+    background-color: #BBB;
+    cursor: auto;
+
+    span 
+    {
+        cursor: auto;
+    }
 }
