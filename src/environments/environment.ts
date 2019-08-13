@@ -17,13 +17,13 @@
 
 export const environment = {
   production: false,
-  
+
   domain: 'http://localhost:4200',
   apiUrl: 'http://api-dev.oceano.com',
   dsUrl: 'http://ds-dev.oceano.com',
   ssoUrl: 'https://sso.oceano.com',
   suiteUrl: 'http://suite.oceano.com',
-  
+
   pathPublic: 'public',
   pathLogin: 'login',
   pathRegistro: 'registro',
@@ -43,7 +43,7 @@ export const environment = {
   apiPasswordChange: '/api/user/change_password/',
 
   recoveryMail: '/api/user/forgot_password',
-  
+
   newPassword: '/api/user/forgot_password/change',
   getConsumerProducts: 'http://ds-dev.oceano.com/api/product/stamp_user?stamp_id=4&user_id=',
   // getConsumerProducts: './mocks/list-products.json',

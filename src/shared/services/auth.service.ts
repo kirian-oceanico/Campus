@@ -8,8 +8,9 @@ import { StorageService }                                                       
 import { environment }                                                          from '../../environments/environment';
 import { Logger, Loader }	                                                    from 'mk';
 
+
 @Injectable()
-export class AuthService 
+export class AuthService
 {
 	// store the URL so we can redirect after logging in
   	private _redirectUrl: string;
@@ -28,7 +29,7 @@ export class AuthService
 
 	public set redirectUrl ( url: string ) { this._redirectUrl = url; }
 
-  	public login( data: any ): Observable<Response> 
+  	public login( data: any ): Observable<Response>
   	{
   	  	return this._http.post( this._ssoLogin, data )
         .map( (response:any) => {
@@ -42,12 +43,13 @@ export class AuthService
             return res;
         });
   	}
-	
-  	public logout(): void 
+
+  	public logout(): void
   	{
   	  	this._storage.clear();
         this._redirectUrl = null;
-        this._router.navigateByUrl('');
+        window.location.href = environment.domain;
+        //this._router.navigateByUrl('');
   	}
 
   	public isLoggedIn () : boolean
@@ -55,8 +57,8 @@ export class AuthService
         let token: string = this._storage.get(this._user_id);
   		return token && token != 'undefined';
 	}
-	
-	public getToken () 
+
+	public getToken ()
 	{
 		return this._storage.get(this._user_id);
 	}
@@ -66,7 +68,7 @@ export class AuthService
         this._redirectUrl = null;
     }
 
-    public setSession (data: any): Observable<Response> 
+    public setSession (data: any): Observable<Response>
     {
         return this._http.post( environment.ssoUrl + '/sso/set_no_redirect', data );
     }

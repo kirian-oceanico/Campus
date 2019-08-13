@@ -117,12 +117,12 @@ export class UserService extends DataService<User>
 		};
 		return this.http.post(ds+'/user/send/files', obj)
         .map( (response: any) => {
-            this.loader.dismiss('file'); 
+            this.loader.dismiss('file');
             return response.json();
         })
         .pipe( tap( () =>  this._refreshFilesNeded$.next() ) );
     }
-    
+
     public deleteFile ( id: any )
     {
         let ds = this._dsUrl;
