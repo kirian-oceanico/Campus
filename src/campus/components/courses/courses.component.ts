@@ -1,10 +1,10 @@
-import { Component, ViewChildren, ElementRef, ViewChild, 
+import { Component, ViewChildren, ElementRef, ViewChild,
 	QueryList, Renderer2, HostListener }                    							from '@angular/core';
-import { Observable, BehaviorSubject, Subscription } 					from "rxjs/Rx"; 
+import { Observable, BehaviorSubject, Subscription } 					from "rxjs/Rx";
 
 import { Logger, Loader }												from 'mk';
 
-import { CoursesService }												from '../../services/courses.service';			
+import { CoursesService }												from '../../services/courses.service';
 
 @Component({
 	templateUrl: './courses.component.html',
@@ -30,13 +30,13 @@ export class CoursesComponent
 
 	private _currentWindowWidth : number;
 
-	public constructor ( 
-		private logger: Logger, 
-		private _cs: CoursesService, 
-		private _loader: Loader, 
-		private renderer: Renderer2 ) 
-	{ 
-		logger.log('COURSES COMPONENT'); 
+	public constructor (
+		private logger: Logger,
+		private _cs: CoursesService,
+		private _loader: Loader,
+		private renderer: Renderer2 )
+	{
+		logger.log('COURSES COMPONENT');
 		this._subscriptions = new Array();
 		this.amount = 0;
 		this.progressBarWidth = 0;
@@ -52,30 +52,29 @@ export class CoursesComponent
 
         if ( this._cs.subject.getValue().length <= 0 )
         {
-			setTimeout(()=>{
-				//este loader se borra en COURSES SERVICE
-				this._loader.show('courses');
-			}, 100);
-
+			    setTimeout(()=>{
+				  //este loader se borra en COURSES SERVICE
+				  this._loader.show('courses');
+			  }, 100);
         	this._cs.load();
 		};
 
 		this._first = true;
 	}
 
-	public ngOnDestroy () : void 
-    { 
+	public ngOnDestroy () : void
+    {
         this._subscriptions.forEach( sub => sub.unsubscribe());
 		this._subscriptions.length = 0;
 	}
-	
+
 	private subscribeCourses () : Subscription
     {
     	return this._cs.courses.subscribe( courses => {
 			this._courses = courses;
 		});
 	}
-	
+
 	public plusSlide () : void {
 		let cardWidth = this._curso._results[0].nativeElement.clientWidth;
 		let containerWidth = this._carousel.nativeElement.clientWidth;
@@ -88,8 +87,8 @@ export class CoursesComponent
 
 		this.progressBarWidthPerCard = ( 100 / (this._courses.length) );
 
-		if ( this.progressBarWidth === 0 ) this.progressBarWidth =  this.progressBarWidthPerCard * this._cardsShown;	
-		
+		if ( this.progressBarWidth === 0 ) this.progressBarWidth =  this.progressBarWidthPerCard * this._cardsShown;
+
         //el valor de translateX tiene que disminuir para avanzar
 		if ( cardWidth < maxValueTranslateX + this.amount ) {
 			this.amount -= cardWidth;
@@ -98,8 +97,8 @@ export class CoursesComponent
 		} else if ( maxValueTranslateX > -this.amount ) {
 			let resto = maxValueTranslateX + this.amount;
 			this.amount -= resto;
-		} 
-		
+		}
+
 		if ( maxValueTranslateX === -this.amount ) {
 			this._last = true;
 			this.progressBarWidth = 100;
@@ -121,7 +120,7 @@ export class CoursesComponent
 		if ( this.amount === 0 ) this._first = true;
 	};
 
-	// ABRIR-CERRAR EL COMPONENTE DE ACTIVACION DE CURSO 
+	// ABRIR-CERRAR EL COMPONENTE DE ACTIVACION DE CURSO
 
 	private onInicio(init) {
 		this.showInicio = true;

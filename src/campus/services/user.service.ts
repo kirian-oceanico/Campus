@@ -97,7 +97,7 @@ export class UserService extends DataService<User>
 	public getUserFiles ( ) : Observable<any>
 	{
 		this.loader.show('files');
-		let ds = 'http://ds.log'; // this._dsUrl
+		let ds = this._dsUrl
 		return this.http.get( ds + '/user/files?user_id=' + this._as.getToken())
 		.map( (response: any) => {
 			this.loader.dismiss('files');
@@ -109,7 +109,7 @@ export class UserService extends DataService<User>
 	{
         this.loader.show('file');
 
-		let ds = 'http://ds.log'; // this._dsUrl
+		let ds = this._dsUrl
 		let obj = {
 			'user_id': this._as.getToken(),
 			'title': title,
@@ -125,7 +125,7 @@ export class UserService extends DataService<User>
     
     public deleteFile ( id: any )
     {
-        let ds = 'http://ds.log';
+        let ds = this._dsUrl;
 
         return this.http.delete( ds + '/user/files/' + id)
         .map( (response: any) => response.json() )

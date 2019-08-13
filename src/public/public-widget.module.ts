@@ -1,6 +1,6 @@
 // --- Angular imports --------------------------------------------------------------------------------------------------------------
-import { NgModule, ModuleWithProviders }      					from '@angular/core';
-import { CommonModule } 										from '@angular/common'; 
+import {NgModule, ModuleWithProviders, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import { CommonModule } 										from '@angular/common';
 
 import { RouterModule, Routes } 								from '@angular/router';
 
@@ -26,25 +26,25 @@ import { SharedModule }											from '../shared/shared.module';
  *	Widget module for common components and directives
  */
 @NgModule({
-	imports: 		[ 
+	imports: 		[
 		CommonModule,
 		RouterModule.forChild(publicRoutes),
 
 		CoreModule.forRoot(),
     	MkC,
     	FormModule,
-    	
+
     	ReactiveFormsModule,
 
     	SharedModule
 	],
 	entryComponents:[ RegistroDialogComponent ],
-	declarations: 	[ 
-		PublicComponent, 
-		LoginComponent, 
-		RegistroComponent, 
+	declarations: 	[
+		PublicComponent,
+		LoginComponent,
+		RegistroComponent,
 		PasswordRecoveryComponent,
-		RegistroDialogComponent, 
+		RegistroDialogComponent,
 		/*PasswordChangeComponent, DialogTermsAndConditionsComponent,*/ ],
 	exports: 		[ PublicComponent ]
 })

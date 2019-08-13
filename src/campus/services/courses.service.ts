@@ -1,15 +1,15 @@
 import { Inject, Injectable, Optional }							from '@angular/core';
 import { Response, Http } 										from "@angular/http";
-import { Observable, BehaviorSubject,Subscription } 			from "rxjs/Rx"; 
-		
+import { Observable, BehaviorSubject,Subscription } 			from "rxjs/Rx";
+
 import { environment }											from '../../environments/environment';
-		
+
 import { DataServiceInterface }									from 'mk';
 import { DataService }											from 'mk';
-		
+
 import { Logger }												from 'mk';
 import { Loader }												from 'mk';
-		
+
 import { Producto, ProductoInterface }				    		from '../models/producto.model';
 
 import { Sello, SelloInterface }                				from '../models/sello.model';
@@ -21,9 +21,9 @@ export class CoursesService extends DataService<Producto>
 {
 	private _prodUrl: string = environment.getConsumerProducts;
 
-	public constructor ( 
-		private http: Http, 
-		private loader: Loader, 
+	public constructor (
+		private http: Http,
+		private loader: Loader,
 		private logger: Logger,
 		private _as: AuthService )
 	{
@@ -32,8 +32,8 @@ export class CoursesService extends DataService<Producto>
 
 	public get courses () : Observable<Array<Producto>> { return this.subject.asObservable(); }
 
-	public getById ( id: number|string ) : Observable<any> 
-	{		
+	public getById ( id: number|string ) : Observable<any>
+	{
 		return null
 	};
 
@@ -51,13 +51,13 @@ export class CoursesService extends DataService<Producto>
 
 			for (let p of datos.data)
 			{
-				aux = p; 
+				aux = p;
 				aux.stamp = new Sello(aux.stamp);
 				aux.certifying_entity = new EntidadCertificadora(aux.certifying_entity);
 				aux.license = new Licencia(aux.license);
 				productos.push(new Producto(aux));
 			}
-			
+
 			this.loader.dismiss('courses');
 
 			for(let prod of productos)
@@ -66,5 +66,5 @@ export class CoursesService extends DataService<Producto>
 			}
             this.emit();
 		});
-	} 
+	}
 }

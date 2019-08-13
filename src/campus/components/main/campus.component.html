@@ -1,13 +1,13 @@
 <section class="container-fluid {{_outer_class}}">
-  	
+
   	<div class="row">
-    
+
     	<section class="container-left col-md-5 col-lg-4 col-xl-4">
-			
+
       	<section class="container-left-heading">
 				<div class="navigation">
 						<div class="navigation__menu">
-							<log-out></log-out>				
+							<log-out></log-out>
 
 							<img src="assets/img/logo.png" alt="Logotipo de la Oceano medicina"
 								 class="logo"
@@ -17,13 +17,13 @@
 						</div>
 
 						<div class="navigation__sites">
-							<a class="heading_link" 
+							<a class="heading_link"
 								[ngClass]="{ heading_link_active : _cuenta === true }"
 								routerLink="/{{_acount}}" routerLinkActive="active">MI CUENTA</a>
-							<a class="heading_link" 
+							<a class="heading_link"
 								[ngClass]="{ heading_link_active : _cursos === true }"
 								routerLink="/{{_courses}}" routerLinkActive="active">MIS CURSOS</a>
-							<a class="heading_link" 
+							<a class="heading_link"
 								[ngClass]="{ heading_link_active : _certificados === true }"
 								routerLink="/{{_certificates}}" routerLinkActive="active">CERTIFICACIONES</a>
 						</div>
@@ -41,11 +41,11 @@
 							style="padding: 0px;
                             overflow: auto;
                             height: 100vh">
-  
+
 			<router-outlet></router-outlet>
 
     	</section>
-    
+
   	</div>
 
 </section>

@@ -1,7 +1,6 @@
 import { Component }                         							from '@angular/core';
 
 import { Logger }														from 'mk';
-			
 
 @Component({
 	templateUrl: './public.component.html',

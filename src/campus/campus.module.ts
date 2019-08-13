@@ -1,5 +1,5 @@
 // --- Angular imports --------------------------------------------------------------------------------------------------------------
-import { NgModule, ModuleWithProviders }      																from '@angular/core';
+import {NgModule, ModuleWithProviders, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 import { Http }																								from '@angular/http';
 
@@ -14,8 +14,8 @@ import { UserService }																						from './services/user.service';
 import { SharedModule } from '../shared/shared.module'
 
 @NgModule({
-	imports: 		[ 
-		CampusServiceModule.forRoot(), 
+	imports: 		[
+		CampusServiceModule.forRoot(),
 		CampusWidgetModule,
 		SharedModule
 	],
@@ -26,9 +26,9 @@ import { SharedModule } from '../shared/shared.module'
 })
 export class CampusModule
 {
-	public constructor ( private logger: Logger, private fs: MkFormService, private cs: CoursesService, private us: UserService ) 
-	{ 
-		this.logger.log('CAMPUS-MODULE'); 
+	public constructor ( private logger: Logger, private fs: MkFormService, private cs: CoursesService, private us: UserService )
+	{
+		this.logger.log('CAMPUS-MODULE');
 
 		fs.addServices([cs, us]);
 	}

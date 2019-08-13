@@ -16,7 +16,6 @@ import { HttpModule, Http, XHRBackend, RequestOptions }                         
 import { httpFactoryCustom }                                                                    from '../shared/services/intercepted-http-custom';
 import { InterceptedHttp }                                                                        from 'mk';
 
-
 // -- App imports ---------------------------------------------------------------------------
 import { appRoutes } from './app.routes';
 
@@ -34,9 +33,9 @@ import { AuthService }    from '../shared/services/auth.service';
         BrowserModule,
         BrowserAnimationsModule,
         RouterModule.forRoot( appRoutes, { enableTracing: true } ),
-      
-        
-      
+
+
+
         CoreModule.forRoot(),
         CommonModule,
         FormModule,
@@ -49,7 +48,7 @@ import { AuthService }    from '../shared/services/auth.service';
         CampusModule
     ],
     providers: [
-        Loader, 
+        Loader,
         Logger,
         {
             provide: Window,

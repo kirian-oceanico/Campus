@@ -1,6 +1,6 @@
 // --- Angular imports --------------------------------------------------------------------------------------------------------------
-import { NgModule, ModuleWithProviders }      					from '@angular/core';
-import { CommonModule } 										from '@angular/common'; 
+import {NgModule, ModuleWithProviders, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import { CommonModule } 										from '@angular/common';
 
 import { RouterModule, Routes } 								from '@angular/router';
 
@@ -43,39 +43,39 @@ import { LogOutComponent } from './components/log-out/log-out.component';
  *	Widget module for common components and directives
  */
 @NgModule({
-	imports: 		[ 
+	imports: 		[
 		CommonModule,
 		RouterModule.forChild(campusRoutes),
 
 		CoreModule.forRoot(),
     	MkC,
     	FormModule,
-    	
+
     	ReactiveFormsModule,
 
 		SharedModule,
 
 		PopoverModule
 	],
-	entryComponents:[ 
-		UserJobsDialogComponent, 
-		CropperComponent, 
+	entryComponents:[
+		UserJobsDialogComponent,
+		CropperComponent,
 		FormErrorDialog,
 		CourseClosedDialog ],
-	declarations: 	[ 
-		CampusComponent, 
-		AcountComponent, 
-		CoursesComponent, 
-		CourseCardComponent, 
-		CertificatesComponent, 
-		CertificateCardComponent, 
-		CertificateRequestComponent, 
-		UserJobsDialogComponent, 
+	declarations: 	[
+		CampusComponent,
+		AcountComponent,
+		CoursesComponent,
+		CourseCardComponent,
+		CertificatesComponent,
+		CertificateCardComponent,
+		CertificateRequestComponent,
+		UserJobsDialogComponent,
 		FormErrorDialog,
 		CourseClosedDialog,
 		PasswordChangeComponent,
-		AvatarComponent, 
-		CropperComponent, 
+		AvatarComponent,
+		CropperComponent,
 		DraggableDirective,
 		LogOutComponent,
 		CourseActivacionComponent,
